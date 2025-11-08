@@ -18,3 +18,9 @@
 # include <termcap.h>
 # include <termios.h>
 # include <unistd.h>
+
+typedef struct shell_s
+{
+	char *cmd;
+	char *args;
+} shell_t;
