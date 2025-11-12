@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 19:44:23 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/11/12 23:58:31 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/11/13 01:05:10 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,4 @@ typedef struct s_shell
 	char *args;
 } t_shell;
 
-typedef enum s_toktyp
-{
-	WORD,
-	PIPE,
-	REDIR_IN,
-	REDIR_OUT,
-	REDIR_APP,
-	HEREDOC	
-} t_toktyp;
 
-typedef struct s_token
-{
-	t_toktyp	type;
-	char		*value;
-	t_token		*next;
-}	t_token;
