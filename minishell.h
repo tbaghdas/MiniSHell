@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 19:44:23 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/11/13 01:05:10 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/11/13 01:06:36 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 # include <termcap.h>
 # include <termios.h>
 # include <unistd.h>
+
+# include "lexer.h"
 
 typedef struct s_shell
 {
