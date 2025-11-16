@@ -3,10 +3,10 @@ CFLAGS  = -Wall -Wextra -Werror -g
 
 NAME    = minishell
 
-SRCS    = lexer.c \
-          lexer_utils.c \
-          token_lst_utils.c \
-          tokens.c
+SRCS    = sources_FE/lexer.c \
+          sources_FE/lexer_utils.c \
+          sources_FE/token_lst_utils.c \
+          sources_FE/tokens.c
 
 OBJS    = $(SRCS:.c=.o)
 

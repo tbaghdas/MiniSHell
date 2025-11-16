@@ -1,0 +1,11 @@
+# object files
+*.o
+
+# static libs
+*.a
+
+# binaries
+minishell
+
+# vscode configs
+.vscode/

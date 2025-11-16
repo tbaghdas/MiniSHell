@@ -6,11 +6,11 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 20:56:17 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/11/16 02:17:54 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/11/17 00:10:01 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	qstate_updater(char c, t_qstate *qs)
 {

@@ -6,13 +6,13 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 01:02:40 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/11/16 23:17:43 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/11/17 00:30:53 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-void	word_start(char *line, t_qstate *qs, t_token **tokhead, size_t *i)
+void	word_start(char *line, t_qstate *qs, t_token **tok_head, size_t *i)
 {
 	size_t	init;
 
@@ -25,15 +25,15 @@ void	word_start(char *line, t_qstate *qs, t_token **tokhead, size_t *i)
 			qstate_updater(line[*i], qs);
 		else if ((*qs == QS_NONE) && (line[*i] == ' ' || is_op_start(line[*i])))
 		{
-			word_end(line, tokhead, *i, init);
+			word_end(line, tok_head, *i, init);
 			return ;
 		}
 		(*i)++;
 	}
-	word_end(line, tokhead, *i, init);
+	word_end(line, tok_head, *i, init);
 }
 
-void	mint_op_token(char* line, t_token **tokhead, size_t* i, int len)
+void	mint_op_token(char* line, t_token **tok_head, size_t* i, int len)
 {
 	char *buf;
 	t_token *new_node;
@@ -57,11 +57,11 @@ void	mint_op_token(char* line, t_token **tokhead, size_t* i, int len)
 		new_node = tok_lst_new(TOK_REDIR_APP, buf);
 	if (len == 2)
 		(*i) += 2;
-	tok_lstadd_back(tokhead, new_node);
+	tok_lstadd_back(tok_head, new_node);
 	free(buf);
 }
 
-void	word_end(char* line, t_token **tokhead, size_t i, size_t init)
+void	word_end(char* line, t_token **tok_head, size_t i, size_t init)
 {
 	size_t size;
 	t_token	*new_node;
@@ -71,7 +71,7 @@ void	word_end(char* line, t_token **tokhead, size_t i, size_t init)
 	buf = malloc((size + 1) * sizeof(char));
 	ft_memcpy(buf, &line[init], size);
 	new_node = tok_lst_new(TOK_WORD, buf);
-	tok_lstadd_back(tokhead, new_node);
+	tok_lstadd_back(tok_head, new_node);
 	free(buf);
 }
 

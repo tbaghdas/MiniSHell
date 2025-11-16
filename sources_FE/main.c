@@ -6,11 +6,11 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 16:48:28 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/11/08 16:58:22 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/11/17 00:10:10 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	main(int argc, char **argv, char **envp)
 {

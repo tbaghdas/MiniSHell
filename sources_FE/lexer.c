@@ -6,11 +6,11 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 23:41:26 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/11/16 23:33:29 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/11/17 00:56:24 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	main(int argc, char** argv)
 {
@@ -33,15 +33,19 @@ int	main(int argc, char** argv)
 			mint_op_token(&line[i], &tok_head, &i, op_len(&line[i]));
 			continue;
 		}
-		else
+		else if (line[i] && !is_op_start(line[i]))
 			word_start(line, &qs, &tok_head, &i);
-		if (line[i])
-			i++;
+		if (!line[i])
+			break;
+		i++;
 	}
-	while (tok_head->next != NULL)
+	while (tok_head != NULL)
 	{
-		printf("%u\n", tok_head->type);
-		printf("%s\n", tok_head->content);
+		printf("TOKEN: %u ", tok_head->type);
+		if (tok_head->type == 0)
+			printf("CONTENT:%s\n", tok_head->content);
+		else
+			printf("\n");
 		tok_head = tok_head->next;
 	}
 }
