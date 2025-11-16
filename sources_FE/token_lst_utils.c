@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 01:11:34 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/11/17 00:21:47 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/11/17 02:36:38 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ t_token *tok_lst_new(t_toktyp type, char *content)
 	new_node = malloc(sizeof(t_token));
 	if (!new_node)
 		return (NULL);
-	new_node->content = ft_strdup(content);
+	if (content)
+		new_node->content = ft_strdup(content);
+	else
+		new_node->content = NULL;
 	new_node->type = type;
 	new_node->next = NULL;
 	return (new_node);
