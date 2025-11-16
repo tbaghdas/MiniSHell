@@ -6,9 +6,12 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 19:44:23 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/11/13 01:06:36 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/11/16 02:03:53 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef MINISHELL_H
+#define MINISHELL_H
 
 # include "../libft/libft.h"
 # include <curses.h>
@@ -39,4 +42,4 @@ typedef struct s_shell
 	char *args;
 } t_shell;
 
-
+#endif
