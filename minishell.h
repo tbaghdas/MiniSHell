@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ilya <ilya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 19:44:23 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/11/16 02:03:53 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/11/17 22:49:45 by ilya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
-# include "../libft/libft.h"
+# include "libft/libft.h"
 # include <curses.h>
 # include <dirent.h>
 # include <errno.h>

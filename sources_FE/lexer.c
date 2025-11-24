@@ -3,28 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ilya <ilya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 23:41:26 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/11/17 02:37:43 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/11/23 18:34:51 by ilya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	main(void)
-// int main(int argc, char** argv)
+void	lexer(char *line, t_token *tok_head, t_qstate *qs)
 {
-	char	*line; 
-	size_t		i;
-	t_token		*tok_head;
-	t_qstate	qs;
+	size_t	i;
 	
-	line = readline("minishell> ");
-	// (void)argc;
-	// line = argv[1];
-	qs = QS_NONE;
-	tok_head = NULL;
 	i = 0;
 	while (line[i])
 	{
@@ -51,4 +42,16 @@ int	main(void)
 		tok_head = tok_head->next;
 	}
 	free(line);
+}
+
+int	parse_input(t_shell *sh, char *line)
+{
+	t_token		*tok_head;
+	t_qstate	qs;
+
+	qs = QS_NONE;
+	tok_head = NULL;
+	
+	lexer(line, &tok_head, &qs);
+	parser(tok_head);
 }

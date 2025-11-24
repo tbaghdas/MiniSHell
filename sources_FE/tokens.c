@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ilya <ilya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 01:02:40 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/11/17 02:37:12 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/11/23 21:17:17 by ilya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,17 @@ void	mint_op_token(char* line, t_token **tok_head, size_t* i, int len)
 	if (len == 1)
 	{
 		if (line[*i] == '|')
-			new_node = tok_lst_new(TOK_PIPE, NULL);
+			new_node = tok_lst_new(TOK_PIPE, "|");
 		else if (line[*i] == '<')
-			new_node = tok_lst_new(TOK_REDIR_IN, NULL);
+			new_node = tok_lst_new(TOK_REDIR_IN, "<");
 		else if (line[*i] == '>')
-			new_node = tok_lst_new(TOK_REDIR_OUT, NULL);
+			new_node = tok_lst_new(TOK_REDIR_OUT, ">");
 		(*i)++;
 	}
 	else if (line[*i] == '<')
-		new_node = tok_lst_new(TOK_HEREDOC, NULL);
+		new_node = tok_lst_new(TOK_HEREDOC, "<<");
 	else if (line[*i] == '>')
-		new_node = tok_lst_new(TOK_REDIR_APP, NULL);
+		new_node = tok_lst_new(TOK_REDIR_APP, ">>");
 	if (len == 2)
 		(*i) += 2;
 	tok_lstadd_back(tok_head, new_node);

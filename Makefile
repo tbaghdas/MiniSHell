@@ -1,7 +1,7 @@
 # === Variables ===
 CFLAGS  = -Wall -Wextra -Werror -g 
 
-LDFLAGS = -lreadline -lhistory
+LDFLAGS = -lreadline
 
 NAME    = minishell
 
