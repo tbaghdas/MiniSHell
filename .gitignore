@@ -6,6 +6,11 @@
 
 # binaries
 minishell
+a.out
 
 # vscode configs
 .vscode/
+
+# temp / scratch files
+cmds.txt
+test.c
