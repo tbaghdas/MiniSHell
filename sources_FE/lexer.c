@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilya <ilya@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 23:41:26 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/11/23 18:34:51 by ilya             ###   ########.fr       */
+/*   Updated: 2025/11/25 02:34:54 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	parse_input(t_shell *sh, char *line)
 {
 	t_token		*tok_head;
 	t_qstate	qs;
+	t_cmd		*cmd;
 
 	qs = QS_NONE;
 	tok_head = NULL;

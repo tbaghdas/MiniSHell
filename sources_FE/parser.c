@@ -3,45 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilya <ilya@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 18:32:24 by ilya              #+#    #+#             */
-/*   Updated: 2025/11/24 01:24:55 by ilya             ###   ########.fr       */
+/*   Updated: 2025/11/25 03:05:17 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int redirs_errors(t_token *tok_head)
+
+
+
+
+
+
+
+
+
+
+
+
+
+void	parser(t_token *tok_head, t_cmd **cmd)
 {
+	t_token	*cur_tok;
 	
-}
-
-
-
-
-
-
-
-
-
-
-
-
-void	parser(t_token *tok_head)
-{
-	int	ctr;
-
-	ctr = 0;
-	while(tok_head->next)
-	{
-		if (tok_head->type != TOK_WORD)
-		{
-			ctr++;
-			if (ctr == 1 && tok_head->type == TOK_PIPE)
-				syntax_errorer(tok_head->content);
-			else if (redirs_error(tok_head) == 1);
-				
-			syntax_errorer(tok_head->content);
-	}
+	cur_tok = tok_head;
+	if (first_pipe_checker(cur_tok))
+			syntax_errorer("|");
+	words_handler(cur_tok, *cmd);
+	//redirs_handler(cur_tok, *cmd);
 }
