@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   redirs_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/26 01:29:08 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/11/28 22:47:15 by ikiriush         ###   ########.fr       */
+/*   Created: 2025/11/26 02:50:02 by ikiriush          #+#    #+#             */
+/*   Updated: 2025/11/26 23:18:56 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-void	parser(t_token *tok, t_cmd **cmd)
-{
-	t_cmd	*cmd_cur;
 
-	while (tok)
-	{
-		if (tok->type != PIPE)
-			all_tokens_handler(&tok, &cmd_cur);
-		if (!tok || tok->type == PIPE)
-		{
-			if (tok && (
-				(tok->next && tok->next->type == PIPE) ||
-				(!tok->next)))
-					syntax_errorer(tok->content);
-			cmd_lstadd_back(cmd, cmd_cur);
-			cmd_cur = NULL;
-			if (tok)
-				tok = tok->next;
-		}
-	}
+int	is_input_redir(t_toktyp type)
+{
+	return (type == REDIR_IN || type == HEREDOC);
+}
+
+int	is_output_redir(t_toktyp type)
+{
+	return (type == REDIR_OUT || type == REDIR_APP);
 }

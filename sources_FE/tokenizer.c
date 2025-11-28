@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokens.c                                           :+:      :+:    :+:   */
+/*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilya <ilya@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 01:02:40 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/11/23 21:17:17 by ilya             ###   ########.fr       */
+/*   Updated: 2025/11/27 01:08:19 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,17 @@ void	mint_op_token(char* line, t_token **tok_head, size_t* i, int len)
 	if (len == 1)
 	{
 		if (line[*i] == '|')
-			new_node = tok_lst_new(TOK_PIPE, "|");
+			new_node = tok_lst_new(PIPE, "|");
 		else if (line[*i] == '<')
-			new_node = tok_lst_new(TOK_REDIR_IN, "<");
+			new_node = tok_lst_new(REDIR_IN, "<");
 		else if (line[*i] == '>')
-			new_node = tok_lst_new(TOK_REDIR_OUT, ">");
+			new_node = tok_lst_new(REDIR_OUT, ">");
 		(*i)++;
 	}
 	else if (line[*i] == '<')
-		new_node = tok_lst_new(TOK_HEREDOC, "<<");
+		new_node = tok_lst_new(HEREDOC, "<<");
 	else if (line[*i] == '>')
-		new_node = tok_lst_new(TOK_REDIR_APP, ">>");
+		new_node = tok_lst_new(REDIR_APP, ">>");
 	if (len == 2)
 		(*i) += 2;
 	tok_lstadd_back(tok_head, new_node);
@@ -71,7 +71,7 @@ void	word_end(char* line, t_token **tok_head, size_t i, size_t init)
 	buf = malloc((size + 1) * sizeof(char));
 	ft_memcpy(buf, &line[init], size);
 	buf[size] = '\0';
-	new_node = tok_lst_new(TOK_WORD, buf);
+	new_node = tok_lst_new(WORD, buf);
 	tok_lstadd_back(tok_head, new_node);
 	free(buf);
 }

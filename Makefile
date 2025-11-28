@@ -5,10 +5,19 @@ LDFLAGS = -lreadline
 
 NAME    = minishell
 
-SRCS    = sources_FE/lexer.c \
+SRCS    = main.c \
+          minishell.c \
+          sources_FE/cmd_lst_utils.c \
+          sources_FE/fe_launcher.c \
+          sources_FE/lexer.c \
           sources_FE/lexer_utils.c \
+          sources_FE/parser.c \
+          sources_FE/parser_utils.c \
+          sources_FE/redir_lst_utils.c \
+          sources_FE/redirs_utils.c \
+          sources_FE/syntax_error.c \
           sources_FE/token_lst_utils.c \
-          sources_FE/tokens.c
+          sources_FE/tokenizer.c
 
 OBJS    = $(SRCS:.c=.o)
 

@@ -12,5 +12,6 @@ a.out
 .vscode/
 
 # temp / scratch files
-cmds.txt
+*.txt
 test.c
+*.sh

@@ -7,8 +7,8 @@ TODO
 - redirectons & heredoc
 
 /Ilya
-- lexer
-- parser
+- lexer // DONE
+- parser // DONE EXCEPT ERRORS DETECTOR
 - expander
 
 ## 🧭 Suggested Timeline (Approx. 3–4 weeks)

@@ -3,44 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_lst_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilya <ilya@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 01:11:34 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/11/25 01:31:22 by ilya             ###   ########.fr       */
+/*   Updated: 2025/11/27 00:07:59 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int word_counter(t_token *tok_head)
+int	word_counter(t_token *tok_head)
 {
 	int	ctr;
 	
 	ctr = 0;
 	
-	while(tok_head->next && tok_head->type == TOK_WORD)
+	while(tok_head->next && tok_head->type == WORD)
 	{
 		ctr++;
 	}
+	return (ctr);
 }
 
 
-t_cmd *cmd_lst_new(t_redir *redirs, char *argv)
+t_cmd	*cmd_lst_new()
 {
-	t_token	*new_node;
+	t_cmd	*new_node;
 	
 	new_node = malloc(sizeof(t_cmd));
 	if (!new_node)
 		return (NULL);
-	new_node->argv = ft_strdup(content);
-	new_node->type = type;
+	new_node->argv = NULL;
+	new_node->redirs = NULL;
 	new_node->next = NULL;
 	return (new_node);
 }
 
-void	tok_lstadd_back(t_token **lst, t_token *new_node)
+void	cmd_lstadd_back(t_cmd **lst, t_cmd *new_node)
 {
-	t_token	*buf;
+	t_cmd	*buf;
 
 	if (!lst || !new_node)
 		return ;
@@ -55,9 +56,9 @@ void	tok_lstadd_back(t_token **lst, t_token *new_node)
 	buf->next = new_node;
 }
 
-void	tok_lstclear(t_token **lst, void (*del)(void*))
+void	cmd_lstclear(t_cmd **lst, void (*del)(void*))
 {
-	t_token	*temp;
+	t_cmd	*temp;
 
 	if (!lst || !*lst)
 		return ;
@@ -65,7 +66,7 @@ void	tok_lstclear(t_token **lst, void (*del)(void*))
 	{
 		temp = (*lst)->next;
 		if (del)
-			del((*lst)->content);
+			del((*lst)->argv);
 		free(*lst);
 		*lst = temp;
 	}

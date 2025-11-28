@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   redir_lst_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilya <ilya@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 01:11:34 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/11/24 01:46:16 by ilya             ###   ########.fr       */
+/*   Updated: 2025/11/27 01:06:07 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_redir *cmd_lst_new(t_token *tok_head, char *target)
+t_redir	*redir_lst_new(t_token *tok)
 {
 	t_redir	*new_node;
 	
 	new_node = malloc(sizeof(t_redir));
 	if (!new_node)
 		return (NULL);
-	new_node->type = tok_head->type;
-	new_node->target = ft_strdup(tok_head->next->content);
-	if (tok_head->type == TOK_HEREDOC)
+	new_node->type = tok->type;
+	new_node->target = ft_strdup(tok->next->content);
+	if (tok->type == HEREDOC)
 		new_node -> do_expand = 0;
 	else
 		new_node -> do_expand = 1;
@@ -29,7 +29,7 @@ t_redir *cmd_lst_new(t_token *tok_head, char *target)
 	return (new_node);
 }
 
-void	tok_lstadd_back(t_redir **lst, t_redir *new_node)
+void	redir_lstadd_back(t_redir **lst, t_redir *new_node)
 {
 	t_redir	*buf;
 
@@ -46,7 +46,7 @@ void	tok_lstadd_back(t_redir **lst, t_redir *new_node)
 	buf->next = new_node;
 }
 
-void	tok_lstclear(t_redir **lst, void (*del)(void*))
+void	redir_lstclear(t_redir **lst, void (*del)(void*))
 {
 	t_redir	*temp;
 

@@ -6,72 +6,79 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 02:33:03 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/11/25 03:25:03 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/11/29 00:33:31 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	count_pipes(t_token *cur_tok)
+int	count_words_until_pipe(t_token *tok)
 {
 	int	count;
 
 	count = 0;
-	while (cur_tok)
+	while (tok && tok->type != PIPE)
 	{
-		if (cur_tok->type == TOK_PIPE)
+		if (tok->type == WORD)
 			count++;
-		cur_tok = cur_tok->next;
+		else if (tok->type != WORD)
+			count--;
+		tok = tok->next;
 	}
 	return (count);
 }
 
-int	count_words_until_pipe(t_token *cur_tok)
+void	redir_handler(t_token **tok, t_cmd **cmd)
 {
-	int	count;
-
-	count = 0;
-	while (cur_tok->type != TOK_PIPE)
-	{
-		if (cur_tok->type == TOK_WORD)
-			count++;
-		cur_tok = cur_tok->next;
-	}
-	return (count);
-}
-
-int first_pipe_checker(t_token *cur)
-{
-	if (cur->type == TOK_PIPE)
-		return 1;
-	return 0;
-}
-
-redir_handler(t_token **cur_tok, t_cmd **cmd)
-{
+	t_redir	*redir_cur;
 	
-}
+	redir_cur = (*cmd)->redirs;
+	if (!(*tok)->next)
+		syntax_errorer("newline");
+	else if ((*tok)->next->type == PIPE)
+		syntax_errorer((*tok)->next->content);
+	else if ((*tok)->next->type != WORD)
+		syntax_errorer((*tok)->next->content);
+	// if (redir_cur)
+	// {
+	// 	while (redir_cur && redir_cur->type)
+	// 	{
+	// 		if ((is_input_redir((*tok)->type) && is_input_redir(redir_cur->type)) ||
+	// 			(is_output_redir((*tok)->type) && is_output_redir(redir_cur->type)))
+	// 		{
+	// 			redir_cur->type = (*tok)->type;
+	// 			free(redir_cur->target);
+	// 			redir_cur->target = ft_strdup((*tok)->next->content);
+	// 			*tok = (*tok)->next;
+	// 			return ;
+	// 		}
+	// 		redir_cur = redir_cur->next;
+	// 	}
+	// }
+	redir_cur = redir_lst_new(*tok);
+	redir_lstadd_back(&(*cmd)->redirs, redir_cur);
+	*tok = (*tok)->next;
+	}
 
-int words_handler(t_token *cur_tok, t_cmd **cmd)
+void	all_tokens_handler(t_token **tok, t_cmd **cmd)
 {
-	int arr_size;
 	int wordcount;
 	int i;
-	int j;
-
-	arr_size = count_pipes(cur_tok);
+	
+	wordcount = count_words_until_pipe(*tok);
 	i = 0;
-	j = 0;
-	wordcount = count_words_until_pipe(cur_tok);
-	(*cmd)->argv[i] = malloc((sizeof(char*) * wordcount) + 1);
-	while (i < arr_size && cur_tok)
+	*cmd = cmd_lst_new();
+	(*cmd)->argv = malloc(sizeof(char*) * (wordcount + 1));
+	(*cmd)->argv[wordcount] = NULL;
+	while (*tok && (*tok)->type != PIPE)
 	{
-		if (cur_tok->type == TOK_WORD)
-			(*cmd)->argv[i][j++] = ft_strdup(cur_tok-> content);
-		else if (cur_tok->type > TOK_WORD)
-			redir_handler(&cur_tok, cmd);
-		else if (cur_tok->type == TOK_PIPE)
-			pipe_walker(&i, &j);
-		cur_tok = cur_tok->next;
+		if ((*tok)->type == WORD)
+		{
+			(*cmd)->argv[i++] = ft_strdup((*tok)->content);
+		}
+		else
+			redir_handler(tok, cmd);
+		*tok = (*tok)->next;
 	}
 }
+

@@ -6,13 +6,13 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 01:11:34 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/11/25 02:34:00 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/11/26 23:08:54 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_token *tok_lst_new(t_toktyp type, char *content)
+t_token	*tok_lst_new(t_toktyp type, char *content)
 {
 	t_token	*new_node;
 	

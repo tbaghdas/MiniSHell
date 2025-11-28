@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilya <ilya@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 19:44:23 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/11/17 22:49:45 by ilya             ###   ########.fr       */
+/*   Updated: 2025/11/29 03:47:29 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,16 @@
 # include <termios.h>
 # include <unistd.h>
 
-# include "lexer.h"
+# include "front_end.h"
 
 typedef struct s_shell
 {
-	char *cmd;
-	char *args;
+	char	*cmd;
+	char	*args;
+	int		exit_code;
 } t_shell;
+
+void	main_loop(t_shell *sh, char **envp);
+int		parse_input(t_shell **sh, char **envp, char *line);
 
 #endif
