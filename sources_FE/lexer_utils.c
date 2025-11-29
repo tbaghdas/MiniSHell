@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 20:56:17 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/11/17 00:10:01 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/11/29 20:03:51 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	qstate_updater(char c, t_qstate *qs)
 
 int	is_op_start(char c)
 {
-	return (c == '|' || c == '>' || c == '<');
+	return (c == '|' || c == '>' || c == '<' || c == '\n');
 }
 
 int	op_len(char *s)
@@ -50,4 +50,7 @@ int	is_escaping(t_qstate qs, char c)
 	return (c == '$' || c == '"' || c == '\\');
 }
 
-
+int	ft_isspace(char c)
+{
+	return (c == ' ' || c == '\f' || c == '\r' || c == '\t' || c == '\v');
+}

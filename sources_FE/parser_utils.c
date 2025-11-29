@@ -6,18 +6,18 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 02:33:03 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/11/29 00:33:31 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/11/29 20:09:54 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	count_words_until_pipe(t_token *tok)
+int	count_words_until_pipe_or_nl(t_token *tok)
 {
 	int	count;
 
 	count = 0;
-	while (tok && tok->type != PIPE)
+	while (tok && tok->type != PIPE && tok->type != NEW_LINE)
 	{
 		if (tok->type == WORD)
 			count++;
@@ -39,22 +39,6 @@ void	redir_handler(t_token **tok, t_cmd **cmd)
 		syntax_errorer((*tok)->next->content);
 	else if ((*tok)->next->type != WORD)
 		syntax_errorer((*tok)->next->content);
-	// if (redir_cur)
-	// {
-	// 	while (redir_cur && redir_cur->type)
-	// 	{
-	// 		if ((is_input_redir((*tok)->type) && is_input_redir(redir_cur->type)) ||
-	// 			(is_output_redir((*tok)->type) && is_output_redir(redir_cur->type)))
-	// 		{
-	// 			redir_cur->type = (*tok)->type;
-	// 			free(redir_cur->target);
-	// 			redir_cur->target = ft_strdup((*tok)->next->content);
-	// 			*tok = (*tok)->next;
-	// 			return ;
-	// 		}
-	// 		redir_cur = redir_cur->next;
-	// 	}
-	// }
 	redir_cur = redir_lst_new(*tok);
 	redir_lstadd_back(&(*cmd)->redirs, redir_cur);
 	*tok = (*tok)->next;
@@ -65,12 +49,12 @@ void	all_tokens_handler(t_token **tok, t_cmd **cmd)
 	int wordcount;
 	int i;
 	
-	wordcount = count_words_until_pipe(*tok);
+	wordcount = count_words_until_pipe_or_nl(*tok);
 	i = 0;
 	*cmd = cmd_lst_new();
 	(*cmd)->argv = malloc(sizeof(char*) * (wordcount + 1));
 	(*cmd)->argv[wordcount] = NULL;
-	while (*tok && (*tok)->type != PIPE)
+	while (*tok && (*tok)->type != PIPE && (*tok)->type != NEW_LINE)
 	{
 		if ((*tok)->type == WORD)
 		{

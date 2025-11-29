@@ -20,7 +20,8 @@ typedef enum e_toktyp
 	REDIR_IN,
 	HEREDOC,
 	REDIR_OUT,
-	REDIR_APP
+	REDIR_APP,
+	NEW_LINE
 } t_toktyp;
 
 typedef enum e_qstate
@@ -60,6 +61,7 @@ int		is_escaping(t_qstate qs, char c);
 int		is_op_start(char c);
 void	qstate_updater(char c, t_qstate *qs);
 int		op_len(char *s);
+int		ft_isspace(char c);
 
 //tokenizer
 void	mint_op_token(char* line, t_token **tokhead, size_t* i, int len);
@@ -75,7 +77,7 @@ void	tok_lstclear(t_token **lst, void (*del)(void*));
 //PARSER
 void	parser(t_token *tok, t_cmd **cmd);
 int		count_pipes(t_token *tok);
-int		count_words_until_pipe(t_token *tok);
+int		count_words_until_pipe_or_nl(t_token *tok);
 void	redir_handler(t_token **tok, t_cmd **cmd);
 void	all_tokens_handler(t_token **tok, t_cmd **cmd);
 
