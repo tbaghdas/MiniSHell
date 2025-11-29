@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 19:44:23 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/11/29 03:47:29 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/11/29 19:45:14 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 # include <unistd.h>
 
 # include "front_end.h"
+# include "built_in/built_in.h"
+# include "signals/signals.h"
 
 typedef struct s_shell
 {
@@ -42,6 +44,14 @@ typedef struct s_shell
 	char	*args;
 	int		exit_code;
 } t_shell;
+
+typedef struct s_env
+{
+	char	*key;
+	char	*value;
+	bool	export_flag;
+	struct s_env *next;
+} t_env;
 
 void	main_loop(t_shell *sh, char **envp);
 int		parse_input(t_shell **sh, char **envp, char *line);
