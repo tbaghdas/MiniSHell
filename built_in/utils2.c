@@ -6,19 +6,19 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 18:54:53 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/11/29 19:06:02 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/11/30 16:24:00 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "built_in.h"
 
-void	print_env(char **env)
+int	print_env(char **env)
 {
 	int	i;
 
 	if (env == NULL)
 	{
-		return ;
+		return (-1);
 	}
 	i = 0;
 	while (env[i] != NULL)
@@ -26,6 +26,7 @@ void	print_env(char **env)
 		printf("%s\n", env[i]);
 		i++;
 	}
+	return (1);
 }
 
 int	array_size(char **arr)
@@ -69,7 +70,7 @@ char	**sort_env(t_env *env)
 	return (env_array);
 }
 
-int	check_for_export(char *str)
+int	check_for_export(char *str, t_env *env)
 {
 	char	*key;
 	char	*value;

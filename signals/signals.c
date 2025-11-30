@@ -6,16 +6,16 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 18:55:08 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/11/29 18:55:11 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/11/30 16:13:20 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "signals.h"
 
 void	sigint_handler(int sig)
 {
-	(void)sig;
-	g_exit_status = 130;
+	// (void)sig;
+	g_exit_status = 128 + sig;
 	write(1, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();

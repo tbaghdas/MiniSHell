@@ -6,11 +6,11 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 18:54:03 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/11/29 19:03:39 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/11/30 16:22:32 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "built_in.h"
 
 int	built_in_echo(char *str)
 {
@@ -72,7 +72,7 @@ int	built_in_pwd(void)
 
 int	built_in_export(char *str, t_env *env)
 {
-	if (str == NULL || env == NULL || env[0] == NULL)
+	if (str == NULL || env == NULL)
 	{
 		return (1);
 	}
@@ -87,7 +87,7 @@ int	built_in_export(char *str, t_env *env)
 			return (0);
 		}
 	}
-	if (check_for_export(str) != 0)
+	if (check_for_export(str, env) != 0)
 	{
 		return (1);
 	}
@@ -96,14 +96,14 @@ int	built_in_export(char *str, t_env *env)
 
 int	built_in_unset(char *key, t_env *env)
 {
-	if (key == NULL || env == NULL || env[0] == NULL)
+	if (key == NULL || env == NULL)
 	{
 		return (1);
 	}
 	if (del_env(env, key) == -2)
 	{
 		ft_putstr_fd("minishell: unset: `", 2);
-		ft_putstr_fd(tmp->string, 2);
+		ft_putstr_fd(key, 2);
 		ft_putstr_fd("': not a valid identifier\n", 2);
 		return (1);
 	}

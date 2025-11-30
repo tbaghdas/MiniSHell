@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "built_in.h"
 
 char	*ft_getenv(char *key, t_env *env)
 {

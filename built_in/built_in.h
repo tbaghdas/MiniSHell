@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 19:13:00 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/11/29 19:44:52 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/11/30 16:25:13 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_setenv(char *key, t_env *env, char *value);
 void	add_env(t_env **env, char *key, char *value);
 char	**get_env_array(t_env *env);
 int		del_env(t_env **env, char *key);
-void	print_env(char **env);
+int 	print_env(char **env);
 int		array_size(char **arr);
 char	**sort_env(t_env *env);
 int		check_for_export(char *str);

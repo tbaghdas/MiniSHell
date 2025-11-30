@@ -6,19 +6,23 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 18:54:20 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/11/29 19:07:59 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/11/30 16:39:32 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "built_in.h"
 
 int	built_in_env(t_env *env)
 {
-	if (env == NULL || env[0] == NULL)
+	if (env == NULL)
 	{
 		return (1);
 	}
-	print_env(get_env_array(env));
+	if (print_env(get_env_array(env)) == -1)
+	{
+		return (1);
+	}
+	return (0);
 }
 
 int	built_in_exit(char *args)
@@ -34,12 +38,12 @@ int	built_in_exit(char *args)
 		// free_all(env, stack, split);
 		exit(2);
 	}
-	splt = ft_split(args);
+	splt = ft_split(args, ' ');/////////////////the args are splited already the logic must move in wrapper 
 	if (splt == NULL || splt[0] == NULL)
 	{
 		return (1);
 	}
-	if (split[1] != NULL)
+	if (splt[1] != NULL)
 	{
 		// g_exit_status = 127; // 1 not 127
 		write(1, "exit\n", 5);

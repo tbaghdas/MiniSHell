@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 19:44:23 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/11/30 00:51:56 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/11/30 16:26:46 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
-# include "libft/libft.h"
 # include <curses.h>
 # include <dirent.h>
 # include <errno.h>
@@ -33,7 +32,9 @@
 # include <termcap.h>
 # include <termios.h>
 # include <unistd.h>
+# include <signal.h>
 
+# include "libft/libft.h"
 # include "front_end.h"
 # include "built_in/built_in.h"
 # include "signals/signals.h"
