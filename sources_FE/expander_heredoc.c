@@ -1,38 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   expander_heredoc.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/26 01:29:08 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/06 18:31:59 by ikiriush         ###   ########.fr       */
+/*   Created: 2025/12/05 01:30:11 by ikiriush          #+#    #+#             */
+/*   Updated: 2025/12/06 02:31:19 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	parser(t_token *tok, t_shell *sh)
+void	heredoc_expander(char **line, t_shell *sh)
 {
-	t_cmd	*cmd_cur;
+	int		i;
+	int		j;
+	char	*buf;
 
-	cmd_cur = sh->cmd;
-	while (tok)
+	i = 0;
+	j = 0;
+	buf = malloc(VAR_NAME_MAX * sizeof(char));
+	if (!buf)
+		fatal_error("malloc", sh);
+	while ((*line)[i])
 	{
-		if (tok->type != PIPE)
-			if (all_tokens_handler(&tok, &cmd_cur, sh))
-				return (1);
-		if (!tok || tok->type == PIPE)
+		if ((*line)[i] == '$')
 		{
-			if (tok && (
-					(tok->next && tok->next->type == PIPE)
-					|| (!tok->next)))
-				return (syntax_errorer(tok->content, sh), 1);
-			cmd_lstadd_back(&sh->cmd, cmd_cur);
-			cmd_cur = NULL;
-			if (tok)
-				tok = tok->next;
+			if (env_extractor(*line, buf, &i, &j))
+				fatal_error("malloc", sh);
+			continue ;
 		}
+		buf[j++] = (*line)[i++];
 	}
-	return (0);
+	buf[j] = '\0';
+	free(*line);
+	*line = ft_strdup(buf);
+	free(buf);
+	if (!*line)
+		fatal_error("malloc", sh);
 }

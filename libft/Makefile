@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+         #
+#    By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/10 18:46:27 by tbaghdas          #+#    #+#              #
-#    Updated: 2025/07/10 18:46:29 by tbaghdas         ###   ########.fr        #
+#    Updated: 2025/12/02 22:36:53 by ikiriush         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ BONUS_OFILES	= $(BONUS:.c=.o)
 
 NAME	= libft.a
 
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror -g
 
 %.o: %.c	$(libft.h) Makefile
 				$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)

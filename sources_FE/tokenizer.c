@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 01:02:40 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/11/29 20:00:51 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/05 04:00:03 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,10 @@ void	word_start(char *line, t_qstate *qs, t_token **tok_head, size_t *i)
 	init = *i;
 	while (line[*i])
 	{
-		if (line[*i + 1] && line[*i] == '\\' && is_escaping(*qs, line[*i + 1]))
-			(*i)++;
-		else if (line[*i] == '\'' || line[*i] == '\"')
+		if (line[*i] == '\'' || line[*i] == '\"')
 			qstate_updater(line[*i], qs);
-		else if ((*qs == QS_NONE) && (ft_isspace(line[*i]) || is_op_start(line[*i])))
+		else if ((*qs == NONE) && (ft_isspace(line[*i])
+				|| is_op_start(line[*i])))
 		{
 			word_end(line, tok_head, *i, init);
 			return ;
@@ -33,9 +32,9 @@ void	word_start(char *line, t_qstate *qs, t_token **tok_head, size_t *i)
 	word_end(line, tok_head, *i, init);
 }
 
-void	mint_op_token(char* line, t_token **tok_head, size_t* i, int len)
+void	mint_op_token(char *line, t_token **tok_head, size_t *i, int len)
 {
-	t_token *new_node;
+	t_token	*new_node;
 
 	new_node = NULL;
 	if (len == 1)
@@ -46,8 +45,6 @@ void	mint_op_token(char* line, t_token **tok_head, size_t* i, int len)
 			new_node = tok_lst_new(REDIR_IN, "<");
 		else if (line[*i] == '>')
 			new_node = tok_lst_new(REDIR_OUT, ">");
-		else if (line[*i] == '\n')
-			new_node = tok_lst_new(NEW_LINE, "newline");
 		(*i)++;
 	}
 	else if (line[*i] == '<')
@@ -59,12 +56,12 @@ void	mint_op_token(char* line, t_token **tok_head, size_t* i, int len)
 	tok_lstadd_back(tok_head, new_node);
 }
 
-void	word_end(char* line, t_token **tok_head, size_t i, size_t init)
+void	word_end(char *line, t_token **tok_head, size_t i, size_t init)
 {
-	size_t size;
+	size_t	size;
 	t_token	*new_node;
-	char* buf;
-	
+	char	*buf;
+
 	size = i - init;
 	buf = malloc((size + 1) * sizeof(char));
 	ft_memcpy(buf, &line[init], size);
@@ -73,4 +70,3 @@ void	word_end(char* line, t_token **tok_head, size_t i, size_t init)
 	tok_lstadd_back(tok_head, new_node);
 	free(buf);
 }
-

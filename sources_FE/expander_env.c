@@ -1,38 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   expander_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/26 01:29:08 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/06 18:31:59 by ikiriush         ###   ########.fr       */
+/*   Created: 2025/12/05 02:38:29 by ikiriush          #+#    #+#             */
+/*   Updated: 2025/12/06 01:09:06 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	parser(t_token *tok, t_shell *sh)
+int	env_extractor(char *line, char *buf, int *i, int *j)
 {
-	t_cmd	*cmd_cur;
+	int		start;
+	char	*value;
+	char	*buf2;
+	int		len;
 
-	cmd_cur = sh->cmd;
-	while (tok)
+	start = ++(*i);
+	buf2 = NULL;
+	while (line && line[*i] && (ft_isalnum(line[*i]) || line[*i] == '_'))
+		(*i)++;
+	len = *i - start;
+	if (len > 0)
 	{
-		if (tok->type != PIPE)
-			if (all_tokens_handler(&tok, &cmd_cur, sh))
-				return (1);
-		if (!tok || tok->type == PIPE)
-		{
-			if (tok && (
-					(tok->next && tok->next->type == PIPE)
-					|| (!tok->next)))
-				return (syntax_errorer(tok->content, sh), 1);
-			cmd_lstadd_back(&sh->cmd, cmd_cur);
-			cmd_cur = NULL;
-			if (tok)
-				tok = tok->next;
-		}
+		buf2 = ft_substr(line, start, len);
+		if (!buf2)
+			return (1);
 	}
+	value = getenv(buf2);
+	if (value)
+	{
+		start = 0;
+		while (value[start])
+			buf[(*j)++] = value[start++];
+	}
+	free(buf2);
 	return (0);
 }

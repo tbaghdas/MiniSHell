@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 19:44:23 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/11/30 16:26:46 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/06 19:07:53 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
-#define MINISHELL_H
+# define MINISHELL_H
 
 # include <curses.h>
 # include <dirent.h>
@@ -35,26 +35,30 @@
 # include <signal.h>
 
 # include "libft/libft.h"
-# include "front_end.h"
+# include "sources_FE/front_end.h"
 # include "built_in/built_in.h"
 # include "signals/signals.h"
+# include "gnl/get_next_line.h"
 
 typedef struct s_shell
 {
 	t_cmd	*cmd;
-	//t_env	*env;
+	t_env	*env;
+	t_token	*tok;
 	int		exit_code;
-} t_shell;
+}	t_shell;
 
 typedef struct s_env
 {
-	char	*key;
-	char	*value;
-	bool	export_flag;
-	struct s_env *next;
-} t_env;
+	char			*key;
+	char			*value;
+	bool			export_flag;
+	struct s_env	*next;
+}	t_env;
 
+void	free_front_end_shell(t_shell *sh);
 void	main_loop(t_shell *sh, char **envp);
-int		parse_input(t_shell **sh, char **envp, char *line);
+int		parse_input(t_shell *sh, char **envp, char *line);
+void	print_cmds(t_shell *sh);
 
 #endif

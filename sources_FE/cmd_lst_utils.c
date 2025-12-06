@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 01:11:34 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/11/27 00:07:59 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/05 03:43:40 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,19 @@
 int	word_counter(t_token *tok_head)
 {
 	int	ctr;
-	
+
 	ctr = 0;
-	
-	while(tok_head->next && tok_head->type == WORD)
+	while (tok_head->next && tok_head->type == WORD)
 	{
 		ctr++;
 	}
 	return (ctr);
 }
 
-
-t_cmd	*cmd_lst_new()
+t_cmd	*cmd_lst_new(void)
 {
 	t_cmd	*new_node;
-	
+
 	new_node = malloc(sizeof(t_cmd));
 	if (!new_node)
 		return (NULL);

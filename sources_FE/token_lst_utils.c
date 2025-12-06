@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 01:11:34 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/11/26 23:08:54 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/05 03:42:07 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_token	*tok_lst_new(t_toktyp type, char *content)
 {
 	t_token	*new_node;
-	
+
 	new_node = malloc(sizeof(t_token));
 	if (!new_node)
 		return (NULL);

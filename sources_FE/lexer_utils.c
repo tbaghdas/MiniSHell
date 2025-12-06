@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 20:56:17 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/11/29 20:03:51 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/05 03:52:44 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 void	qstate_updater(char c, t_qstate *qs)
 {
-	if (*qs == QS_NONE)
+	if (*qs == NONE)
 	{
 		if (c == '\'')
-			*qs = QS_SINGLE;
+			*qs = SINGLE;
 		else if (c == '\"')
-			*qs = QS_DOUBLE;
+			*qs = DOUBLE;
 	}
-	else if (*qs == QS_SINGLE && c == '\'')
-		*qs = QS_NONE;
-	else if (*qs == QS_DOUBLE && c == '\"')
-		*qs = QS_NONE;
+	else if (*qs == SINGLE && c == '\'')
+		*qs = NONE;
+	else if (*qs == DOUBLE && c == '\"')
+		*qs = NONE;
 }
 
 int	is_op_start(char c)
 {
-	return (c == '|' || c == '>' || c == '<' || c == '\n');
+	return (c == '|' || c == '>' || c == '<');
 }
 
 int	op_len(char *s)
@@ -41,16 +41,8 @@ int	op_len(char *s)
 	return (1);
 }
 
-int	is_escaping(t_qstate qs, char c)
-{
-	if (qs == QS_NONE)
-		return (1);
-	if (qs == QS_SINGLE)
-		return (0);
-	return (c == '$' || c == '"' || c == '\\');
-}
-
 int	ft_isspace(char c)
 {
-	return (c == ' ' || c == '\f' || c == '\r' || c == '\t' || c == '\v');
+	return (c == ' ' || c == '\f' || c == '\r'
+		|| c == '\t' || c == '\v' || c == '\n');
 }
