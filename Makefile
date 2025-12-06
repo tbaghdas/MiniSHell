@@ -20,9 +20,9 @@ SRCS    = main.c \
           sources_FE/redir_lst_utils.c \
           sources_FE/syntax_error.c \
           sources_FE/token_lst_utils.c \
-          sources_FE/tokenizer.c \
-          gnl/get_next_line.c \
-          gnl/get_next_line_utils.c
+          sources_FE/tokenizer.c
+#          gnl/get_next_line.c \
+#          gnl/get_next_line_utils.c
 
 OBJS    = $(SRCS:.c=.o)
 

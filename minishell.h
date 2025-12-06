@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 19:44:23 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/06 19:07:53 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/06 19:30:31 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 # include "sources_FE/front_end.h"
 # include "built_in/built_in.h"
 # include "signals/signals.h"
-# include "gnl/get_next_line.h"
+//# include "gnl/get_next_line.h"
 
 typedef struct s_shell
 {

@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 19:13:00 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/11/30 16:25:13 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/06 19:31:09 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILT_IN_H
 # define BUILT_IN_H
 
-# include "../minishell.h"
+//# include "../minishell.h"
+typedef struct s_env	t_env;
 
 int	built_in_echo(char *str);
 int	built_in_cd(char *path, t_env *env);
