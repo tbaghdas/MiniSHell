@@ -8,8 +8,8 @@ TODO
 
 /Ilya
 - lexer // DONE
-- parser // DONE EXCEPT ERRORS DETECTOR
-- expander
+- parser // DONE
+- expander // DONE
 
 ## 🧭 Suggested Timeline (Approx. 3–4 weeks)
 
