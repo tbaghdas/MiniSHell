@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 01:16:48 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/06 18:49:30 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/07 00:46:43 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ static void	handle_redirs(t_shell *sh)
 	t_cmd	*cmd;
 	char	*buf;
 
-	rd = sh->cmd->redirs;
+	if (sh->cmd)
+		rd = sh->cmd->redirs;
 	cmd = sh->cmd;
 	while (cmd)
 	{
@@ -72,16 +73,14 @@ static void	handle_redirs(t_shell *sh)
 static void	handle_cmds(t_shell *sh)
 {
 	int		i;
-	int		j;
 	char	*buf;
 	t_cmd	*cmd;
 
-	i = 0;
-	j = 0;
 	cmd = sh->cmd;
 	while (cmd)
 	{
-		while (cmd->argv[i++])
+		i = 0;
+		while (cmd->argv[i])
 		{
 			if (ft_strchr(cmd->argv[i], '\'') || ft_strchr(cmd->argv[i], '\"')
 				|| ft_strchr(cmd->argv[i], '$'))
@@ -93,8 +92,8 @@ static void	handle_cmds(t_shell *sh)
 				cmd->argv[i] = actual_expander(buf, sh);
 				free(buf);
 			}
+			i++;
 		}
-		i = 0;
 		cmd = cmd->next;
 	}
 }
