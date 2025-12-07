@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 22:54:05 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/07 01:08:46 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/08 01:35:28 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@ static int	temp_file_writer(t_redir *rd, t_shell *sh)
 	int		wfd;
 	char	*line;
 
-	if (access("tmp", F_OK) == -1)
-		mkdir("tmp", 0700);
-	wfd = open("tmp/temp", O_CREAT | O_TRUNC | O_WRONLY, 0600);
+	wfd = open(".tmp", O_CREAT | O_TRUNC | O_WRONLY, 0600);
 	if (wfd == -1)
 		fatal_error("open", sh);
 	while (42)
@@ -50,10 +48,10 @@ static int	heredoc_writer(t_redir *rd, t_shell *sh)
 	if (close(wfd) == -1)
 		fatal_error("close", sh);
 	wfd = -1;
-	rfd = open("tmp/temp", O_RDONLY, 0600);
+	rfd = open(".tmp", O_RDONLY, 0600);
 	if (rfd == -1)
 		fatal_error("open", sh);
-	unlink("tmp/temp");
+	unlink(".tmp");
 	return (rfd);
 }
 

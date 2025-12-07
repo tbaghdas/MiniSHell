@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 18:32:24 by ilya              #+#    #+#             */
-/*   Updated: 2025/12/06 19:06:33 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/08 01:32:09 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@
 // 	t_redir	*rd;
 
 // 	cmd_cur = sh->cmd;
-// 	rd = sh->cmd->redirs;
+// 	n = 0;
 // 	while (cmd_cur)
 // 	{
 // 		i = 0;
-// 		n = 0;
+// 		rd = cmd_cur->redirs;
 // 		while (cmd_cur)
 // 		{
 // 			printf("cmd #%d\n", n);
@@ -63,6 +63,7 @@
 // 						rd->target);
 // 					if (rd->type == HEREDOC)
 // 					{
+// 						printf("fd: %d\n", rd->fd);
 // 						printf("content:\n");
 // 						line = get_next_line(rd->fd);
 // 						while (line)
@@ -92,9 +93,11 @@ int	parse_input(t_shell *sh, char **envp, char *line)
 	(void)envp;
 	(void)env;
 	qs = NONE;
-	lexer(line, sh, &qs);
+	if (lexer(line, sh, &qs))
+		return (1);
+	// print_tokens(sh);
 	if (sh->tok && sh->tok->type == PIPE)
-		return (syntax_errorer(sh->tok->content, sh), 1);
+		return (syntax_errorer_redirs(sh->tok->content, sh), 1);
 	if (parser(sh->tok, sh))
 		return (1);
 	expander(sh);

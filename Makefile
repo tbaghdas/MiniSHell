@@ -11,6 +11,7 @@ SRCS    = main.c \
           sources_FE/expander.c \
           sources_FE/expander_env.c \
           sources_FE/expander_heredoc.c \
+          sources_FE/freers.c \
           sources_FE/heredoc.c \
           sources_FE/lexer.c \
           sources_FE/lexer_utils.c \
@@ -21,8 +22,8 @@ SRCS    = main.c \
           sources_FE/syntax_error.c \
           sources_FE/token_lst_utils.c \
           sources_FE/tokenizer.c
-#          gnl/get_next_line.c \
-#          gnl/get_next_line_utils.c
+#           gnl/get_next_line.c \
+#           gnl/get_next_line_utils.c
 
 OBJS    = $(SRCS:.c=.o)
 
@@ -34,6 +35,9 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LDFLAGS) -o $(NAME)
+
+%.o: %.c $(INCS)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR)

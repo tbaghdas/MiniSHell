@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 01:29:08 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/06 18:31:59 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/08 01:25:29 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 int	parser(t_token *tok, t_shell *sh)
 {
 	t_cmd	*cmd_cur;
+	int		cleanup_required;
 
+	cleanup_required = 0;
 	cmd_cur = sh->cmd;
 	while (tok)
 	{
@@ -27,9 +29,11 @@ int	parser(t_token *tok, t_shell *sh)
 			if (tok && (
 					(tok->next && tok->next->type == PIPE)
 					|| (!tok->next)))
-				return (syntax_errorer(tok->content, sh), 1);
+				cleanup_required = 1;
 			cmd_lstadd_back(&sh->cmd, cmd_cur);
 			cmd_cur = NULL;
+			if (cleanup_required == 1)
+				return (syntax_errorer_redirs(tok->content, sh), 1);
 			if (tok)
 				tok = tok->next;
 		}

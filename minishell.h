@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 19:44:23 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/07 19:31:37 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/08 01:30:32 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 # include "built_in/built_in.h"
 # include "signals/signals.h"
 # include "cmd_parsing/cmd_parser.h"
-//# include "gnl/get_next_line.h"
+// # include "gnl/get_next_line.h"
 
 extern volatile	sig_atomic_t g_signum;
 

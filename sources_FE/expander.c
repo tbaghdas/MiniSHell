@@ -6,13 +6,13 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 01:16:48 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/07 21:19:40 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/07 23:20:07 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char	*actual_expander(char *line, t_shell *sh)
+static char	*actual_expander(char *s, t_shell *sh, t_toktyp t)
 {
 	int			i;
 	int			j;
@@ -25,18 +25,18 @@ static char	*actual_expander(char *line, t_shell *sh)
 	buf = malloc(VAR_NAME_MAX * sizeof(char));
 	if (!buf)
 		fatal_error("malloc", sh);
-	while (line[i])
+	while (s[i])
 	{
-		if ((line[i] == '\'' && (qs == NONE || qs == SINGLE))
-			|| (line[i] == '\"' && (qs == NONE || qs == DOUBLE)))
-			qstate_updater(line[i++], &qs);
-		else if (line[i] == '$' && qs != SINGLE)
+		if ((s[i] == '\'' && (qs == NONE || qs == SINGLE))
+			|| (s[i] == '\"' && (qs == NONE || qs == DOUBLE)))
+			qstate_updater(s[i++], &qs);
+		else if (s[i] == '$' && qs != SINGLE && legit(s[i + 1]) && t != HEREDOC)
 		{
-			if (env_extractor(line, buf, &i, &j))
+			if (env_extractor(s, buf, &i, &j))
 				fatal_error("malloc", sh);
 		}
 		else
-			buf[j++] = line[i++];
+			buf[j++] = s[i++];
 	}
 	return (buf[j] = '\0', buf);
 }
@@ -47,11 +47,10 @@ static void	handle_redirs(t_shell *sh)
 	t_cmd	*cmd;
 	char	*buf;
 
-	if (sh->cmd)
-		rd = sh->cmd->redirs;
 	cmd = sh->cmd;
 	while (cmd)
 	{
+		rd = cmd->redirs;
 		while (rd)
 		{
 			if (ft_strchr(rd->target, '\'') || ft_strchr(rd->target, '\"')
@@ -61,7 +60,7 @@ static void	handle_redirs(t_shell *sh)
 				if (!buf)
 					fatal_error("malloc", sh);
 				free(rd->target);
-				rd->target = actual_expander(buf, sh);
+				rd->target = actual_expander(buf, sh, rd->type);
 				free(buf);
 			}
 			rd = rd->next;
@@ -89,7 +88,7 @@ static void	handle_cmds(t_shell *sh)
 				if (!buf)
 					fatal_error("malloc", sh);
 				free(cmd->argv[i]);
-				cmd->argv[i] = actual_expander(buf, sh);
+				cmd->argv[i] = actual_expander(buf, sh, WORD);
 				free(buf);
 			}
 			i++;

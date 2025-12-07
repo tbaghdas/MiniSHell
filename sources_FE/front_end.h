@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 01:04:05 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/06 18:37:55 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/08 01:27:22 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ typedef struct s_cmd
 }	t_cmd;
 
 //LEXER
-void	lexer(char *line, t_shell *sh, t_qstate *qs);
+void	print_tokens(t_shell *sh);
+int		lexer(char *line, t_shell *sh, t_qstate *qs);
 int		is_op_start(char c);
 void	qstate_updater(char c, t_qstate *qs);
 int		op_len(char *s);
@@ -73,7 +74,6 @@ t_token	*tok_lst_new(t_toktyp type, char *content);
 void	tok_lstadd_back(t_token **lst, t_token *new_node);
 void	tok_lstclear(t_token **lst, void (*del)(void*));
 
-//----------------------------
 //PARSER
 int		parser(t_token *tok, t_shell *sh);
 int		count_pipes(t_token *tok);
@@ -93,7 +93,7 @@ int		word_counter(t_token *tok_head);
 t_cmd	*cmd_lst_new(void);
 void	cmd_lstadd_back(t_cmd **lst, t_cmd *new_node);
 void	cmd_lstclear(t_cmd **lst, void (*del)(void*));
-//----------------------------
+
 //HEREDOC
 int		process_heredoc(t_shell *sh);
 
@@ -101,9 +101,11 @@ int		process_heredoc(t_shell *sh);
 int		env_extractor(char *line, char *buf, int *i, int *j);
 void	expander(t_shell *sh);
 void	heredoc_expander(char **line, t_shell *sh);
+int		legit(char c);
 
 //error & clean-up utils & debug
 void	fatal_error(char *line, t_shell *sh);
-void	syntax_errorer(char *line, t_shell *sh);
+void	syntax_errorer_quotes(t_qstate qs, t_shell *sh);
+void	syntax_errorer_redirs(char *line, t_shell *sh);
 
 #endif

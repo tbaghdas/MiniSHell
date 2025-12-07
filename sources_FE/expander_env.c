@@ -6,11 +6,16 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 02:38:29 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/06 01:09:06 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/07 23:18:46 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	legit(char c)
+{
+	return (ft_isalnum(c) || c == '_');
+}
 
 int	env_extractor(char *line, char *buf, int *i, int *j)
 {
@@ -21,7 +26,7 @@ int	env_extractor(char *line, char *buf, int *i, int *j)
 
 	start = ++(*i);
 	buf2 = NULL;
-	while (line && line[*i] && (ft_isalnum(line[*i]) || line[*i] == '_'))
+	while (line && line[*i] && legit(line[*i]))
 		(*i)++;
 	len = *i - start;
 	if (len > 0)
@@ -30,13 +35,13 @@ int	env_extractor(char *line, char *buf, int *i, int *j)
 		if (!buf2)
 			return (1);
 	}
-	value = getenv(buf2);
-	if (value)
+	start = 0;
+	if (buf2)
 	{
-		start = 0;
-		while (value[start])
-			buf[(*j)++] = value[start++];
+		value = getenv(buf2);
+		if (value)
+			while (value[start])
+				buf[(*j)++] = value[start++];
 	}
-	free(buf2);
-	return (0);
+	return (free(buf2), 0);
 }
