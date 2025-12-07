@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 16:48:28 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/06 19:08:19 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/07 19:31:57 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_signum;
+volatile sig_atomic_t g_signum;
 
 int	main(int argc, char **argv, char **envp)
 {

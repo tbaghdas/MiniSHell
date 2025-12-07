@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 16:58:54 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/06 19:08:24 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/07 17:20:40 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	main_loop(t_shell *sh, char **envp)
 
 	while (42)
 	{
+		sig_monitoring(sh);
 		line = readline("minishell$ ");
 		if (!line)
 		{

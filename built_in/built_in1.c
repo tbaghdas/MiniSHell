@@ -6,106 +6,115 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 18:54:03 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/11/30 16:22:32 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/07 19:27:15 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "built_in.h"
+#include "../minishell.h"
 
-int	built_in_echo(char *str)
+int	built_in_echo(char **str, t_shell *shell)
 {
-	int	fd;
+	char	*nb;
 
-	fd = 1;
-	if (str == NULL)
+	if (str == NULL || str[0] == NULL || str[0][0] == '\0' && str[1] == NULL
+		|| str[0][0] == '-' && str[0][1] == 'n'
+		&& str[0][2] == '\0' && str[1] == NULL)
+		return (write(1, "\n", 1), 0);
+	while (*str)
 	{
-		return (1);
+		if (ft_strcmp(*str, "$?") == 0)
+		{
+			nb = ft_itoa(shell->exit_code);
+			write(1, nb, ft_strlen(nb));
+			free(nb);
+			str++;
+			continue ;
+		}
+		write(1, *str, ft_strlen(*str));
+		str++;
+		if (*str != NULL)
+			write(1, " ", 1);
 	}
-	write(fd, str, ft_strlen(str));
-	if (str[0] == '-' && str[1] == 'n' || str[0] == '\0')
-	{
-		write(fd, "\n", 1);
-	}
-	return (0);
+	return (shell->exit_code = 0, write(1, "\n", 1), 0);
 }
 
-int	built_in_cd(char *path, t_env *env)
+int	built_in_cd(char **path, t_shell *shell)
 {
 	char	*old_wd;
 	char	*new_path;
 
-	if (path == NULL)
-		return (1);
-	if (ft_strcmp(path, "~") == 0 || ft_strcmp(path, "") == 0
-		|| ft_strcmp(path, "--") == 0 || (path[0] == '~' && path[1] != '\0'))
+	if (path != NULL && path[0] != NULL && path[1] != NULL)
+		return (shell->exit_code = 1,
+			write(2, "cd: too many arguments\n", 23), 1);
+	if (path == NULL || ft_strcmp(*path, "") == 0 || (*path)[0] == '~'
+		|| ft_strcmp(*path, "--") == 0)
 	{
-		new_path = ft_getenv("HOME", env);
+		new_path = ft_getenv("HOME", shell->env);
 		if (new_path == NULL)
-			return (write(2, "cd: HOME not set\n", 17), 1);
-		if (path[0] == '~' && path[1] != '\0')
-			path = ft_strjoin(new_path, &path[1]);
-		else
-			path = new_path;
+			return (shell->exit_code = 1,
+				write(2, "cd: HOME not set\n", 17), 1);
+		if ((*path)[0] == '~' && (*path)[1] != '\0')
+			new_path = ft_strjoin(new_path, &(*path)[1]);
 	}
-	else if (ft_strcmp(path, "-") == 0)
-		path = ft_getenv("OLDPWD", env);
-	old_wd = getcwd();
-	if (chdir(path) != 0)
-		return (perror("chdir failed"), 1);
-	ft_setenv("OLDPWD", env, old_wd);
-	return (0);
+	else if (ft_strcmp((*path), "-") == 0)
+		new_path = ft_getenv("OLDPWD", shell->env);
+	else
+		new_path = *path;
+	old_wd = getcwd(NULL, 0);
+	if (chdir(new_path) != 0)
+		return (shell->exit_code = 1, perror("chdir failed"), 1);
+	ft_setenv("OLDPWD", shell->env, old_wd);
+	return (shell->exit_code = 0, 0);
 }
 
-int	built_in_pwd(void)
+int	built_in_pwd(t_shell *shell)
 {
 	char	*work_dir;
 
 	work_dir = getcwd(NULL, 0);
 	if (work_dir == NULL)
 	{
-		return (1);
+		return (shell->exit_code = 1, 1);
 	}
 	printf("%s\n", work_dir);
 	free (work_dir);
-	return (0);
+	return (shell->exit_code = 0, 0);
 }
 
-int	built_in_export(char *str, t_env *env)
+int	built_in_export(char **str, t_shell *shell)
 {
-	if (str == NULL || env == NULL)
+	if (shell == NULL || shell->env == NULL)
 	{
-		return (1);
+		return (shell->exit_code = 1, 1);
 	}
-	if (str[0] == '\0')
+	if (str == NULL || str[0] == NULL)
 	{
-		if (print_env(sort_env(get_env_arr(env))) != 0)
+		if (print_env(sort_env(shell->env)) != 0)
 		{
-			return (1);
+			return (shell->exit_code = 1, 1);
 		}
 		else
 		{
-			return (0);
+			return (shell->exit_code = 0, 0);
 		}
 	}
-	if (check_for_export(str, env) != 0)
+	if (check_for_export(str, shell->env) != 0)
 	{
-		return (1);
+		return (shell->exit_code = 1, 1);
 	}
-	return (0);
+	return (shell->exit_code = 0, 0);
 }
 
-int	built_in_unset(char *key, t_env *env)
+int	built_in_unset(char **keys, t_shell *shell)
 {
-	if (key == NULL || env == NULL)
+	if (keys == NULL || *keys == NULL || shell->env == NULL)
 	{
-		return (1);
+		return (shell->exit_code = 1, 1);
 	}
-	if (del_env(env, key) == -2)
+	while (*keys)
 	{
-		ft_putstr_fd("minishell: unset: `", 2);
-		ft_putstr_fd(key, 2);
-		ft_putstr_fd("': not a valid identifier\n", 2);
-		return (1);
+		del_env(shell->env, *keys);
+		keys++;
 	}
-	return (0);
+	return (shell->exit_code = 0, 0);
 }
