@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 01:16:48 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/07 01:32:11 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/07 21:19:40 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static void	handle_cmds(t_shell *sh)
 	while (cmd)
 	{
 		i = 0;
-		while (cmd->argv[i++])
+		while (cmd->argv[i])
 		{
 			if (ft_strchr(cmd->argv[i], '\'') || ft_strchr(cmd->argv[i], '\"')
 				|| ft_strchr(cmd->argv[i], '$'))
@@ -92,6 +92,7 @@ static void	handle_cmds(t_shell *sh)
 				cmd->argv[i] = actual_expander(buf, sh);
 				free(buf);
 			}
+			i++;
 		}
 		cmd = cmd->next;
 	}
