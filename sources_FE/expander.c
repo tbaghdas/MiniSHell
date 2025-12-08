@@ -6,13 +6,13 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 01:16:48 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/07 23:20:07 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/08 23:49:07 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char	*actual_expander(char *s, t_shell *sh, t_toktyp t)
+static char	*actual_expander(const char *s, t_shell *sh, t_toktyp t)
 {
 	int			i;
 	int			j;
@@ -45,7 +45,7 @@ static void	handle_redirs(t_shell *sh)
 {
 	t_redir	*rd;
 	t_cmd	*cmd;
-	char	*buf;
+	char	*new_target;
 
 	cmd = sh->cmd;
 	while (cmd)
@@ -56,12 +56,9 @@ static void	handle_redirs(t_shell *sh)
 			if (ft_strchr(rd->target, '\'') || ft_strchr(rd->target, '\"')
 				|| ft_strchr(rd->target, '$'))
 			{
-				buf = ft_strdup(rd->target);
-				if (!buf)
-					fatal_error("malloc", sh);
+				new_target = actual_expander(rd->target, sh, rd->type);
 				free(rd->target);
-				rd->target = actual_expander(buf, sh, rd->type);
-				free(buf);
+				rd->target = new_target;
 			}
 			rd = rd->next;
 		}
@@ -72,7 +69,7 @@ static void	handle_redirs(t_shell *sh)
 static void	handle_cmds(t_shell *sh)
 {
 	int		i;
-	char	*buf;
+	char	*new_target;
 	t_cmd	*cmd;
 
 	cmd = sh->cmd;
@@ -84,12 +81,9 @@ static void	handle_cmds(t_shell *sh)
 			if (ft_strchr(cmd->argv[i], '\'') || ft_strchr(cmd->argv[i], '\"')
 				|| ft_strchr(cmd->argv[i], '$'))
 			{
-				buf = ft_strdup(cmd->argv[i]);
-				if (!buf)
-					fatal_error("malloc", sh);
+				new_target = actual_expander(cmd->argv[i], sh, WORD);
 				free(cmd->argv[i]);
-				cmd->argv[i] = actual_expander(buf, sh, WORD);
-				free(buf);
+				cmd->argv[i] = new_target;
 			}
 			i++;
 		}

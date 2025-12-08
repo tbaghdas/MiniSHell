@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 01:11:34 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/06 03:34:01 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/09 01:37:59 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,15 @@ t_redir	*redir_lst_new(t_token *tok)
 	new_node->type = tok->type;
 	new_node->target = ft_strdup(tok->next->content);
 	new_node->fd = -1;
+	if (tok->type == HEREDOC)
+	{
+		if (tok->next && tok->next->content
+			&& (ft_strchr(tok->next->content, '\'')
+				|| ft_strchr(tok->next->content, '\"')))
+			new_node->do_expand = 0;
+		else
+			new_node->do_expand = 1;
+	}
 	new_node->next = NULL;
 	return (new_node);
 }

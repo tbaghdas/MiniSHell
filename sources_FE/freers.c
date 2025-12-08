@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 23:35:23 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/08 01:04:43 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/09 01:39:44 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	free_tokens(t_shell *sh)
 static void	free_redirs(t_shell *sh)
 {
 	t_redir	*tmp;
+
 	while (sh->cmd->redirs)
 	{
 		tmp = sh->cmd->redirs->next;
@@ -66,7 +67,7 @@ void	free_front_end_shell(t_shell *sh)
 	i = 0;
 	j = 0;
 	if (!sh)
-		return;
+		return ;
 	free_tokens(sh);
 	while (sh->cmd)
 	{

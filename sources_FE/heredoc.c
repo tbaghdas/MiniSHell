@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 22:54:05 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/08 01:35:28 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/09 01:40:07 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ static int	temp_file_writer(t_redir *rd, t_shell *sh)
 			free(line);
 			break ;
 		}
-		if (ft_strchr(line, '$'))
+		if (ft_strchr(line, '$') && rd->do_expand)
 			heredoc_expander(&line, sh);
-		if (write(wfd, line, ft_strlen(line)) == -1)	
+		if (write(wfd, line, ft_strlen(line)) == -1)
 			fatal_error("write (2)", sh);
 		if (write(wfd, "\n", 1) == -1)
 			fatal_error("write (2)", sh);

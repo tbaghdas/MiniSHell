@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 01:30:11 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/06 02:31:19 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/09 01:21:27 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,5 @@ void	heredoc_expander(char **line, t_shell *sh)
 	}
 	buf[j] = '\0';
 	free(*line);
-	*line = ft_strdup(buf);
-	free(buf);
-	if (!*line)
-		fatal_error("malloc", sh);
+	*line = buf;
 }

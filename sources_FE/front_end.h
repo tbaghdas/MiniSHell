@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 01:04:05 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/08 01:27:22 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/08 23:56:40 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_redir
 	char			*target;
 	int				fd;
 	struct s_redir	*next;
+	int				do_expand;
 }	t_redir;
 
 typedef struct s_cmd
