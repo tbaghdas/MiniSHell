@@ -6,58 +6,85 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 19:59:07 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/07 18:15:16 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/08 14:32:10 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /// //env level by calling the minishell, bash, zsh...etc
-////// envp in maiiin is char ******
 
-int create_env(t_shell *shell, char **envp)
+int	init_env(t_shell *shell, char **envp)
 {
 	int		i;
 	char	*equal_sign;
 	t_env	*new_node;
 
-	shell->env = NULL;
 	if (envp == NULL)
 		return (1);
-	i = 0;
-	while (envp[i] != NULL)
+	i = -1;
+	while (envp[++i] != NULL)
 	{
 		equal_sign = ft_strchr(envp[i], '=');
 		new_node = malloc(sizeof(t_env));
 		if (!new_node)
-			return (1); // Memory allocation failed
-
-		if (equal_sign)
-		{
-			size_t key_len = equal_sign - envp[i];
-			new_node->key = ft_substr(envp[i], 0, key_len);
-			new_node->value = ft_strdup(equal_sign + 1);
-		}
-		else
-		{
-			new_node->key = ft_strdup(envp[i]);
-			new_node->value = NULL;
-		}
-		new_node->export_flag = true; // By default, all env vars are exported
-		new_node->next = NULL;
-
-		if (shell->env == NULL)
-		{
-			shell->env = new_node;
-		}
-		else
-		{
-			t_env *temp = shell->env;
-			while (temp->next)
-				temp = temp->next;
-			temp->next = new_node;
-		}
-		i++;
+			return (free_env(shell), 1);
+		init_node_fields(new_node, envp[i], equal_sign);
+		add_node_to_env_list(shell, new_node);
 	}
-	return (0); // Success
+	return (0);
+}
+
+void	init_node_fields(t_env *node, char *env_str, char *equal_sign)
+{
+	size_t	key_len;
+
+	if (equal_sign)
+	{
+		key_len = equal_sign - env_str;
+		node->key = ft_substr(env_str, 0, key_len);
+		node->value = ft_strdup(equal_sign + 1);
+	}
+	else
+	{
+		node->key = ft_strdup(env_str);
+		node->value = NULL;
+	}
+	node->export_flag = true;
+	node->next = NULL;
+}
+
+void	add_node_to_env_list(t_shell *shell, t_env *new_node)
+{
+	t_env	*temp;
+
+	if (shell->env == NULL)
+	{
+		shell->env = new_node;
+	}
+	else
+	{
+		temp = shell->env;
+		while (temp->next)
+			temp = temp->next;
+		temp->next = new_node;
+	}
+}
+
+void	free_env(t_shell *shell)
+{
+	t_env	*current;
+	t_env	*next;
+
+	current = shell->env;
+	while (current != NULL)
+	{
+		next = current->next;
+		free(current->key);
+		if (current->value)
+			free(current->value);
+		free(current);
+		current = next;
+	}
+	shell->env = NULL;
 }

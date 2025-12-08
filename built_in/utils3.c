@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 15:26:41 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/07 16:34:59 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/08 14:27:34 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,12 @@ int	isdigit_str(char *str)
 		i++;
 	}
 	return (0);
+}
+
+void	free_all(t_shell *shell, char **env)
+{
+	free_front_end_shell(shell);
+	free_env(shell);
+	if (env != NULL)
+		free_split(env);
 }

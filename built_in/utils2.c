@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 18:54:53 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/07 19:23:46 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/08 14:02:46 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	print_env(char **env)
 		printf("%s\n", env[i]);
 		i++;
 	}
+	free_split(env);
 	return (1);
 }
 
@@ -41,14 +42,14 @@ int	array_size(char **arr)
 	return (size);
 }
 
-char	**sort_env(t_env *env)
+char	**sort_env(t_env *env, int export_flag)
 {
 	char	**env_array;
 	char	*temp;
 	int		i;
 	int		j;
 
-	env_array = get_env_array(env);
+	env_array = get_env_array(env, export_flag);
 	if (env_array == NULL)
 		return (NULL);
 	i = 0;
@@ -70,7 +71,7 @@ char	**sort_env(t_env *env)
 	return (env_array);
 }
 
-int	check_for_export(char **str, t_env *env)
+int	check_for_export(char **str, t_env *env, t_shell *shell)
 {
 	char	*key;
 	char	*value;
@@ -92,7 +93,7 @@ int	check_for_export(char **str, t_env *env)
 			key = ft_strdup(*str);
 			value = NULL;
 		}
-		ft_setenv(key, env, value);
+		ft_setenv(key, env, value, shell);
 		free_export_key_value(key, value);
 		str++;
 	}

@@ -21,9 +21,27 @@ SRCS    = main.c \
           sources_FE/redir_lst_utils.c \
           sources_FE/syntax_error.c \
           sources_FE/token_lst_utils.c \
-          sources_FE/tokenizer.c
+          sources_FE/tokenizer.c \
 #           gnl/get_next_line.c \
 #           gnl/get_next_line_utils.c
+
+          built_in/built_in.c \
+          built_in/cd.c \
+          built_in/echo.c \
+          built_in/exit.c \
+          built_in/export.c \
+          built_in/pwd.c \
+          built_in/unset.c \
+          built_in/utils.c \
+          built_in/utils2.c \
+          built_in/utils3.c \
+
+          cmd_parsing/cmd_parsing1.c \
+          cmd_parsing/cmd_parsing2.c \
+          cmd_parsing/cmd_parsing3.c \
+          cmd_parsing/create_env.c \
+
+          signal/signals.c 
 
 OBJS    = $(SRCS:.c=.o)
 

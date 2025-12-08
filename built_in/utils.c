@@ -32,7 +32,7 @@ char	*ft_getenv(char *key, t_env *env)
 	return (NULL);
 }
 
-void	ft_setenv(char *key, t_env *env, char *value)
+void	ft_setenv(char *key, t_env *env, char *value, t_shell *shell)
 {
 	t_env	*current;
 
@@ -51,10 +51,10 @@ void	ft_setenv(char *key, t_env *env, char *value)
 		}
 		current = current->next;
 	}
-	add_env(&env, key, value);
+	add_env(&env, key, value, shell);
 }
 
-void	add_env(t_env **env, char *key, char *value)
+void	add_env(t_env **env, char *key, char *value, t_shell *shell)
 {
 	t_env	*new_node;
 
@@ -69,36 +69,38 @@ void	add_env(t_env **env, char *key, char *value)
 	}
 	new_node->key = ft_strdup(key);
 	new_node->value = ft_strdup(value);
-	new_node->next = *env;
+	new_node->next = NULL;
+	add_node_to_env_list(shell, new_node);
 	*env = new_node;
 }
 
-char	**get_env_array(t_env *env)
+char	**get_env_array(t_env *env, int export_flag)
 {
 	char	**env_array;
+	char	*temp;
 	t_env	*current;
 	int		i;
 
 	if (env == NULL)
-	{
 		return (NULL);
-	}
 	env_array = malloc(sizeof(char *) * (ft_lstsize(env) + 1));
 	if (env_array == NULL)
-	{
 		return (NULL);
-	}
 	current = env;
 	i = 0;
 	while (current != NULL)
 	{
-		env_array[i] = ft_strjoin(current->key, "=");
-		env_array[i] = ft_strjoin(env_array[i], current->value);
+		if (!(export_flag && !current->export_flag))
+		{
+			env_array[i] = ft_strjoin(current->key, "=");
+			temp = ft_strjoin(env_array[i], current->value);
+			free(env_array[i]);
+			env_array[i] = temp;
+			i++;
+		}
 		current = current->next;
-		i++;
 	}
-	env_array[i] = NULL;
-	return (env_array);
+	return (env_array[i] = NULL, env_array);
 }
 
 int	del_env(t_env **env, char *key)

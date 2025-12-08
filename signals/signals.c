@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 18:55:08 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/07 17:14:16 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/08 11:04:54 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	handle_ctrl_d(t_shell *shell)
 	shell->exit_code = 0;
 	write(1, "exit\n", 5);
 	rl_clear_history();
-	// free_all(env, stack, split);
+	free_front_end_shell(shell);
+	free_env(shell);
 	exit(0);
 }
 

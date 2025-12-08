@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 18:54:03 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/07 19:27:15 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/08 14:03:19 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	built_in_cd(char **path, t_shell *shell)
 	old_wd = getcwd(NULL, 0);
 	if (chdir(new_path) != 0)
 		return (shell->exit_code = 1, perror("chdir failed"), 1);
-	ft_setenv("OLDPWD", shell->env, old_wd);
+	ft_setenv("OLDPWD", shell->env, old_wd, shell);
 	return (shell->exit_code = 0, 0);
 }
 
@@ -89,7 +89,7 @@ int	built_in_export(char **str, t_shell *shell)
 	}
 	if (str == NULL || str[0] == NULL)
 	{
-		if (print_env(sort_env(shell->env)) != 0)
+		if (print_env(sort_env(shell->env, 1)) != 0)
 		{
 			return (shell->exit_code = 1, 1);
 		}
@@ -98,7 +98,7 @@ int	built_in_export(char **str, t_shell *shell)
 			return (shell->exit_code = 0, 0);
 		}
 	}
-	if (check_for_export(str, shell->env) != 0)
+	if (check_for_export(str, shell->env, shell) != 0)
 	{
 		return (shell->exit_code = 1, 1);
 	}

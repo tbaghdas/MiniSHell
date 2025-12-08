@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 16:58:54 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/08 01:33:28 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/08 10:59:17 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@ void	main_loop(t_shell *sh, char **envp)
 
 	while (42)
 	{
-		//sig_monitoring(sh);
+		sig_monitoring(sh);
 		line = readline("minishell$ ");
 		if (!line)
 		{
-			ft_putstr_fd("exit\n", STDOUT_FILENO);
+			handle_ctrl_d(sh);
+			// ft_putstr_fd("exit\n", STDOUT_FILENO);
 			break ;
 		}
 		if (*line)
