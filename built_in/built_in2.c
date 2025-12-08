@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 18:54:20 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/08 13:00:34 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/08 19:34:45 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	built_in_env(char **args, t_shell *shell)
 	{
 		return (shell->exit_code = 1, 1);
 	}
-	if (print_env(get_env_array(shell->env, 0)) == -1)
+	if (print_env(get_env_array(shell->env, 0), 0) == -1)
 	{
 		return (shell->exit_code = 1, 1);
 	}
@@ -35,7 +35,7 @@ int	built_in_exit(char **args, t_shell *shell)
 	long	flag;
 
 	if (args == NULL || args[0] == NULL
-		|| args[0][0] == '\0' || isdigit_str(args[0][0]) == -1)
+		|| args[0][0] == '\0' || isdigit_str(args[0]) == -1)
 	{
 		write(2, "exit\nminishell: exit: ", 23);
 		write(2, args[0], ft_strlen(args[0]));

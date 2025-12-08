@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 16:58:54 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/08 10:59:17 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/08 15:11:52 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	main_loop(t_shell *sh, char **envp)
 		}
 		process_heredoc(sh);
 		//print_cmds(sh);
-		// execute_commands(&sh);
+		cmd_parser(sh);
 		free(line);
 		free_front_end_shell(sh);
 	}

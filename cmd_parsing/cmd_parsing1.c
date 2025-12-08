@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 19:02:03 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/08 14:31:08 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/08 17:41:50 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,21 @@ int	run_external_or_builtin_in_child(t_cmd *cmd, t_shell *shell)
 	cmd_path = find_command_in_path(cmd->argv[0], shell->env);
 	if (cmd_path == NULL)
 	{
-		ft_putstr_fd("minishell: command not found: ", 2);
-		ft_putendl_fd(cmd->argv[0], 2);
+		print_cmd_not_found(cmd->argv[0]);
 		exit((free_all(shell, NULL), 127));
 	}
 	envp = get_env_array(shell->env, 1);
 	execve(cmd_path, cmd->argv, envp);
-	perror("minishell: execve");
+	print_execve_err(cmd_path);
 	exit((free(cmd_path), free_all(shell, envp), 126));
 }
 
-void	child_process(int pipefd[2], int prev_fd, t_cmd *cur, t_shell *shell)
+void	child_process(int pipefd[2], int *prev_fd, t_cmd *cur, t_shell *shell)
 {
-	if (prev_fd != -1)
+	if (*prev_fd != -1)
 	{
-		dup2(prev_fd, STDIN_FILENO);
-		close(prev_fd);
+		dup2(*prev_fd, STDIN_FILENO);
+		close(*prev_fd);
 	}
 	if (cur->next)
 	{
@@ -90,7 +89,7 @@ int	this_while_body(int *prev_fd, t_cmd *cur, t_shell *shell)
 	}
 	if (pid == 0)
 		child_process(pipefd, prev_fd, cur, shell);
-	closing_fds(pipefd, &prev_fd, cur->next);
+	closing_fds(pipefd, prev_fd, cur->next);
 	return (0);
 }
 
@@ -114,6 +113,9 @@ int	execute_pipeline(t_cmd *start, t_shell *shell)
 	{
 		if (WIFEXITED(status))
 			last_status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			last_status = 128 + WTERMSIG(status);
+		shell->exit_code = last_status;
 	}
 	return (last_status);
 }

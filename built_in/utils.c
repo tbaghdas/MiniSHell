@@ -32,29 +32,30 @@ char	*ft_getenv(char *key, t_env *env)
 	return (NULL);
 }
 
-void	ft_setenv(char *key, t_env *env, char *value, t_shell *shell)
+void	ft_setenv(char *key, int ex_flag, char *value, t_shell *shell)
 {
 	t_env	*current;
 
-	if (key == NULL || env == NULL || value == NULL)
+	if (key == NULL || shell->env == NULL || value == NULL)
 	{
 		return ;
 	}
-	current = env;
+	current = shell->env;
 	while (current != NULL)
 	{
 		if (ft_strcmp(current->key, key) == 0)
 		{
 			free(current->value);
 			current->value = ft_strdup(value);
+			current->export_flag = ex_flag;
 			return ;
 		}
 		current = current->next;
 	}
-	add_env(&env, key, value, shell);
+	add_env(ex_flag, key, value, shell);
 }
 
-void	add_env(t_env **env, char *key, char *value, t_shell *shell)
+void	add_env(int ex_flag, char *key, char *value, t_shell *shell)
 {
 	t_env	*new_node;
 
@@ -69,9 +70,9 @@ void	add_env(t_env **env, char *key, char *value, t_shell *shell)
 	}
 	new_node->key = ft_strdup(key);
 	new_node->value = ft_strdup(value);
+	new_node->export_flag = ex_flag;
 	new_node->next = NULL;
 	add_node_to_env_list(shell, new_node);
-	*env = new_node;
 }
 
 char	**get_env_array(t_env *env, int export_flag)
@@ -83,7 +84,7 @@ char	**get_env_array(t_env *env, int export_flag)
 
 	if (env == NULL)
 		return (NULL);
-	env_array = malloc(sizeof(char *) * (ft_lstsize(env) + 1));
+	env_array = malloc(sizeof(char *) * (list_size(env) + 1));
 	if (env_array == NULL)
 		return (NULL);
 	current = env;

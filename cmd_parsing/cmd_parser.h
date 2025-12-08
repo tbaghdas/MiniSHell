@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 19:06:05 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/08 14:30:21 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/08 15:18:02 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ typedef struct s_shell	t_shell;
 
 // functions in cmd_parsing/cmd_parsing1.c
 int		run_external_or_builtin_in_child(t_cmd *cmd, t_shell *shell);
-void	child_process(int pipefd[2], int prev_fd,
+void	child_process(int pipefd[2], int *prev_fd,
 			t_cmd *cur, t_shell *shell);
 void	closing_fds(int pipefd[2], int *prev_fd, t_cmd *has_next);
 int		this_while_body(int *prev_fd, t_cmd *cur, t_shell *shell);

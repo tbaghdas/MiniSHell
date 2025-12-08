@@ -6,15 +6,15 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 18:54:53 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/08 14:02:46 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/08 19:52:22 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	print_env(char **env)
+int	print_env(char **env, int export)
 {
-	int	i;
+	int		i;
 
 	if (env == NULL)
 	{
@@ -23,7 +23,11 @@ int	print_env(char **env)
 	i = 0;
 	while (env[i] != NULL)
 	{
-		printf("%s\n", env[i]);
+		if (export == 1)
+			print_export_style(env[i]);
+		else
+			ft_putstr_fd(env[i], 1);
+		write(1, "\n", 1);
 		i++;
 	}
 	free_split(env);
@@ -71,12 +75,11 @@ char	**sort_env(t_env *env, int export_flag)
 	return (env_array);
 }
 
-int	check_for_export(char **str, t_env *env, t_shell *shell)
+int	check_for_export(char **str, t_shell *shell)
 {
 	char	*key;
 	char	*value;
 	char	*equal_sign;
-	t_env	*current;
 
 	while (*str)
 	{
@@ -93,7 +96,7 @@ int	check_for_export(char **str, t_env *env, t_shell *shell)
 			key = ft_strdup(*str);
 			value = NULL;
 		}
-		ft_setenv(key, env, value, shell);
+		ft_setenv(key, 1, value, shell);
 		free_export_key_value(key, value);
 		str++;
 	}

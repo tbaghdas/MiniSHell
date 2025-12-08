@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 15:26:41 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/08 14:27:34 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/08 15:03:50 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,19 @@ void	free_all(t_shell *shell, char **env)
 	free_env(shell);
 	if (env != NULL)
 		free_split(env);
+}
+
+int	list_size(t_env *env)
+{
+	t_env	*current;
+	int		size;
+
+	current = env;
+	size = 0;
+	while (current != NULL)
+	{
+		size++;
+		current = current->next;
+	}
+	return (size);
 }

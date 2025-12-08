@@ -1,47 +1,40 @@
 # === Variables ===
-CFLAGS  = -Wall -Wextra -Werror -g 
+CFLAGS  = -Wall -Wextra -Werror -g -fsanitize=address
 
 LDFLAGS = -lreadline -lhistory
 
 NAME    = minishell
 
 SRCS    = main.c \
-          minishell.c \
-          sources_FE/cmd_lst_utils.c \
-          sources_FE/expander.c \
-          sources_FE/expander_env.c \
-          sources_FE/expander_heredoc.c \
-          sources_FE/freers.c \
-          sources_FE/heredoc.c \
-          sources_FE/lexer.c \
-          sources_FE/lexer_utils.c \
-          sources_FE/lex_par_exp.c \
-          sources_FE/parser.c \
-          sources_FE/parser_utils.c \
-          sources_FE/redir_lst_utils.c \
-          sources_FE/syntax_error.c \
-          sources_FE/token_lst_utils.c \
-          sources_FE/tokenizer.c \
-#           gnl/get_next_line.c \
-#           gnl/get_next_line_utils.c
-
-          built_in/built_in.c \
-          built_in/cd.c \
-          built_in/echo.c \
-          built_in/exit.c \
-          built_in/export.c \
-          built_in/pwd.c \
-          built_in/unset.c \
-          built_in/utils.c \
-          built_in/utils2.c \
-          built_in/utils3.c \
-
-          cmd_parsing/cmd_parsing1.c \
-          cmd_parsing/cmd_parsing2.c \
-          cmd_parsing/cmd_parsing3.c \
-          cmd_parsing/create_env.c \
-
-          signal/signals.c 
+		  minishell.c \
+		  sources_FE/cmd_lst_utils.c \
+		  sources_FE/expander.c \
+		  sources_FE/expander_env.c \
+		  sources_FE/expander_heredoc.c \
+		  sources_FE/freers.c \
+		  sources_FE/heredoc.c \
+		  sources_FE/lexer.c \
+		  sources_FE/lexer_utils.c \
+		  sources_FE/lex_par_exp.c \
+		  sources_FE/parser.c \
+		  sources_FE/parser_utils.c \
+		  sources_FE/redir_lst_utils.c \
+		  sources_FE/syntax_error.c \
+		  sources_FE/token_lst_utils.c \
+		  sources_FE/tokenizer.c \
+		  built_in/built_in1.c \
+		  built_in/built_in2.c \
+		  built_in/utils.c \
+		  built_in/utils2.c \
+		  built_in/utils3.c \
+		  built_in/utils4.c \
+		  cmd_parsing/cmd_parsing1.c \
+		  cmd_parsing/cmd_parsing2.c \
+		  cmd_parsing/cmd_parsing3.c \
+		  cmd_parsing/create_env.c \
+		  signals/signals.c 
+#         gnl/get_next_line.c \
+#         gnl/get_next_line_utils.c
 
 OBJS    = $(SRCS:.c=.o)
 

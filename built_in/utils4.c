@@ -1,0 +1,85 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils4.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/08 15:59:48 by tbaghdas          #+#    #+#             */
+/*   Updated: 2025/12/08 19:36:54 by tbaghdas         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../minishell.h"
+
+void	print_cd_err(char *path)
+{
+	write(2, "minishell: cd: ", 15);
+	if (path != NULL)
+	{
+		write(2, path, ft_strlen(path));
+	}
+	write(2, ": ", 2);
+	perror("");
+}
+
+void	print_execve_err(char *cmd_path)
+{
+	write(2, "minishell: ", 11);
+	if (cmd_path != NULL)
+	{
+		write(2, cmd_path, ft_strlen(cmd_path));
+	}
+	write(2, ": ", 2);
+	perror("");
+}
+
+void	print_cmd_not_found(char *cmd_name)
+{
+	if (cmd_name != NULL)
+	{
+		write(2, cmd_name, ft_strlen(cmd_name));
+	}
+	write(2, ": command not found\n", 20);
+}
+
+void	print_export_style(char *str)
+{
+	char	*equal_sign;
+	
+	ft_putstr_fd("declare -x ", 1);
+	equal_sign = ft_strchr(str, '=');
+	if (equal_sign)
+	{
+		write(1, str, equal_sign + 1 - str);
+		write(1, "\"", 1);
+		ft_putstr_fd(equal_sign + 1, 1);
+		write(1, "\"", 1);
+	}
+	else
+		ft_putstr_fd(str, 1);
+}
+
+// void	change_shlvl_value(t_env **env, char **cmd)
+// {
+// 	t_env	*tmp;
+// 	int		res;
+
+// 	tmp = *env;
+// 	res = 0;
+// 	if (ft_strcmp(cmd[0], "./minishell") == 0 && cmd[1] == NULL)
+// 	{
+// 		while (tmp)
+// 		{
+// 			if (ft_strcmp(tmp->key, "SHLVL") == 0)
+// 			{
+// 				if (tmp->value)
+// 					res = ft_atoi(tmp->value);
+// 				free(tmp->value);
+// 				tmp->value = ft_itoa(res + 1);
+// 				return ;
+// 			}
+// 			tmp = tmp->next;
+// 		}
+// 	}
+// }
