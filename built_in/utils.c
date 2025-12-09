@@ -36,7 +36,7 @@ void	ft_setenv(char *key, int ex_flag, char *value, t_shell *shell)
 {
 	t_env	*current;
 
-	if (key == NULL || shell->env == NULL || value == NULL)
+	if (key == NULL || shell->env == NULL)
 	{
 		return ;
 	}
@@ -45,7 +45,8 @@ void	ft_setenv(char *key, int ex_flag, char *value, t_shell *shell)
 	{
 		if (ft_strcmp(current->key, key) == 0)
 		{
-			free(current->value);
+			if (current->value != NULL)
+				free(current->value);
 			current->value = ft_strdup(value);
 			current->export_flag = ex_flag;
 			return ;
@@ -59,7 +60,7 @@ void	add_env(int ex_flag, char *key, char *value, t_shell *shell)
 {
 	t_env	*new_node;
 
-	if (key == NULL || value == NULL)
+	if (key == NULL)
 	{
 		return ;
 	}
@@ -78,7 +79,6 @@ void	add_env(int ex_flag, char *key, char *value, t_shell *shell)
 char	**get_env_array(t_env *env, int export_flag)
 {
 	char	**env_array;
-	char	*temp;
 	t_env	*current;
 	int		i;
 
@@ -91,12 +91,9 @@ char	**get_env_array(t_env *env, int export_flag)
 	i = 0;
 	while (current != NULL)
 	{
-		if (!(export_flag && !current->export_flag))
+		if ((export_flag && current->export_flag) || export_flag == 0)
 		{
-			env_array[i] = ft_strjoin(current->key, "=");
-			temp = ft_strjoin(env_array[i], current->value);
-			free(env_array[i]);
-			env_array[i] = temp;
+			setting_line(&env_array[i], current);
 			i++;
 		}
 		current = current->next;

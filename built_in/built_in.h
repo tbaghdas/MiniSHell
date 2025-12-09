@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 19:13:00 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/08 19:52:46 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/09 19:39:57 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,6 @@ void	print_cd_err(char *path);
 void	print_execve_err(char *cmd_path);
 void	print_cmd_not_found(char *cmd_name);
 void	print_export_style(char *str);
+void	setting_line(char **line, t_env *current);
 
 #endif

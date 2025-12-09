@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 02:38:29 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/08 23:56:34 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/09 15:15:44 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	legit(char c)
 	return (ft_isalnum(c) || c == '_');
 }
 
-int	env_extractor(char *line, char *buf, int *i, int *j)
+int	env_extractor(const char *line, char *buf, int *i, int *j)
 {
 	int		start;
 	char	*value;

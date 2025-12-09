@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 15:59:48 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/08 19:36:54 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/09 19:43:57 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	print_cmd_not_found(char *cmd_name)
 void	print_export_style(char *str)
 {
 	char	*equal_sign;
-	
+
 	ft_putstr_fd("declare -x ", 1);
 	equal_sign = ft_strchr(str, '=');
 	if (equal_sign)
@@ -57,7 +57,24 @@ void	print_export_style(char *str)
 		write(1, "\"", 1);
 	}
 	else
+	{
 		ft_putstr_fd(str, 1);
+	}
+}
+
+void	setting_line(char **line, t_env *current)
+{
+	char	*temp;
+
+	if (current->value != NULL)
+	{
+		*line = ft_strjoin(current->key, "=");
+		temp = ft_strjoin(*line, current->value);
+		free(*line);
+		*line = temp;
+	}
+	else
+		*line = ft_strdup(current->key);
 }
 
 // void	change_shlvl_value(t_env **env, char **cmd)

@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 18:54:03 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/08 19:52:55 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/09 19:47:39 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ int	built_in_cd(char **path, t_shell *shell)
 	char	*old_wd;
 	char	*new_path;
 
-	if (path != NULL && path[0] != NULL && path[1] != NULL && path[2] != NULL && path[2][0] != '\0')
+	if (path && path[0] && path[1] && path[2] != NULL && path[2][0] != '\0')
 		return (shell->exit_code = 1,
 			write(2, "minishell: cd: too many arguments\n", 34), 1);
-	if (path == NULL || path[0] == NULL || path[1] == NULL || ft_strcmp(path[1], "") == 0
+	if (!path || !path[0] || path[1] == NULL || ft_strcmp(path[1], "") == 0
 		|| path[1][0] == '~' || ft_strcmp(path[1], "--") == 0)
 	{
 		new_path = ft_getenv("HOME", shell->env);
