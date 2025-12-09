@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 18:10:55 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/09 18:34:07 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/09 20:24:33 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,5 @@ void	free_split(char **paths)
 		free(paths[i]);
 		i++;
 	}
+	free(paths);
 }

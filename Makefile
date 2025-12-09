@@ -28,6 +28,7 @@ SRCS    = main.c \
 		  built_in/utils2.c \
 		  built_in/utils3.c \
 		  built_in/utils4.c \
+		  built_in/utils5.c \
 		  cmd_parsing/cmd_parsing1.c \
 		  cmd_parsing/cmd_parsing2.c \
 		  cmd_parsing/cmd_parsing3.c \
