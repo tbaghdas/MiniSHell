@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 19:02:03 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/08 17:41:50 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/09 21:43:30 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ int	run_external_or_builtin_in_child(t_cmd *cmd, t_shell *shell)
 
 	if (cmd->redirs && apply_redirs(cmd) == -1)
 	{
-		ft_putstr_fd("minishell: redirection failed\n", 2);
-		exit((free_all(shell, NULL), 1));
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(cmd->redirs->target, 2);
+		exit((write(2, ": ", 2), perror(""), free_all(shell, NULL), 1));
 	}
 	if (is_builtin(cmd->argv[0]))
 	{
