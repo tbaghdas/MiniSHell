@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 23:41:26 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/10 04:23:36 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/10 10:54:15 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	print_tokens(t_shell *sh)
+void	print_tokens(t_shell *sh)
 {
 	t_token	*tok_cur;
 

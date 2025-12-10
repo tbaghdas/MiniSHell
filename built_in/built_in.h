@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 19:13:00 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/09 19:39:57 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/10 16:03:36 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		built_in_exit(char **args, t_shell *shell);
 
 // functions in built_in/utils.c
 char	*ft_getenv(char *key, t_env *env);
-void	ft_setenv(char *key, int ex_flag, char *value, t_shell *shell);
+void	ft_setenv(char *key, int *ex_ap_flag, char *value, t_shell *shell);
 void	add_env(int ex_flag, char *key, char *value, t_shell *shell);
 char	**get_env_array(t_env *env, int export_flag);
 int		del_env(t_env **env, char *key);
@@ -56,5 +56,10 @@ void	print_execve_err(char *cmd_path);
 void	print_cmd_not_found(char *cmd_name);
 void	print_export_style(char *str);
 void	setting_line(char **line, t_env *current);
+
+// functions in built_in/utils5.c
+void	safe_free(char *str);
+int		*check_append(int ex_flag, char *str);
+char	*get_delim(char *str, char *equal_sign);
 
 #endif

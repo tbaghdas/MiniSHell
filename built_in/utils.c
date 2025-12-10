@@ -32,28 +32,33 @@ char	*ft_getenv(char *key, t_env *env)
 	return (NULL);
 }
 
-void	ft_setenv(char *key, int ex_flag, char *value, t_shell *shell)
+void	ft_setenv(char *key, int *ex_ap_flags, char *value, t_shell *shell)
 {
 	t_env	*current;
+	char	*tmp;
 
-	if (key == NULL || shell->env == NULL)
-	{
-		return ;
-	}
 	current = shell->env;
 	while (current != NULL)
 	{
 		if (ft_strcmp(current->key, key) == 0)
 		{
-			if (current->value != NULL)
+			if (current->value != NULL && ex_ap_flags[1] == 1)
+			{
+				tmp = ft_strjoin(current->value, value);
 				free(current->value);
-			current->value = ft_strdup(value);
-			current->export_flag = ex_flag;
+				current->value = tmp;
+			}
+			else
+			{
+				safe_free(current->value);
+				current->value = ft_strdup(value);
+			}
+			current->export_flag = ex_ap_flags[0];
 			return ;
 		}
 		current = current->next;
 	}
-	add_env(ex_flag, key, value, shell);
+	add_env(ex_ap_flags[0], key, value, shell);
 }
 
 void	add_env(int ex_flag, char *key, char *value, t_shell *shell)

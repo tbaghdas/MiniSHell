@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 19:02:03 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/09 21:43:30 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/10 13:33:02 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ int	this_while_body(int *prev_fd, t_cmd *cur, t_shell *shell)
 		if (pipe(pipefd) == -1)
 			return (perror("minishell: pipe"), shell->exit_code = 1, 1);
 	}
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	pid = fork();
 	if (pid == -1)
 	{
@@ -89,7 +91,11 @@ int	this_while_body(int *prev_fd, t_cmd *cur, t_shell *shell)
 		return (1);
 	}
 	if (pid == 0)
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		child_process(pipefd, prev_fd, cur, shell);
+	}
 	closing_fds(pipefd, prev_fd, cur->next);
 	return (0);
 }
@@ -118,5 +124,7 @@ int	execute_pipeline(t_cmd *start, t_shell *shell)
 			last_status = 128 + WTERMSIG(status);
 		shell->exit_code = last_status;
 	}
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
 	return (last_status);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_par_exp.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 18:32:24 by ilya              #+#    #+#             */
-/*   Updated: 2025/12/10 04:23:50 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/10 10:55:28 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,61 +29,61 @@ char	*tok_type_to_str(t_toktyp t)
 	return ("UNKNOWN");
 }
 
-void	print_cmds(t_shell *sh)
-{
-	int		i;
-	int		n;
-	char	*line;
-	t_cmd	*cmd_cur;
-	t_redir	*rd;
+// void	print_cmds(t_shell *sh)
+// {
+// 	int		i;
+// 	int		n;
+// 	char	*line;
+// 	t_cmd	*cmd_cur;
+// 	t_redir	*rd;
 
-	cmd_cur = sh->cmd;
-	n = 0;
-	while (cmd_cur)
-	{
-		i = 0;
-		rd = cmd_cur->redirs;
-		while (cmd_cur)
-		{
-			printf("cmd #%d\n", n);
-			if (cmd_cur->argv[i])
-			{
-				while (cmd_cur->argv[i])
-				{
-					printf("argv[%d]: %s\n", i, cmd_cur->argv[i]);
-					i++;
-				}
-			}
-			if (rd)
-			{
-				while (rd)
-				{
-					printf("redir: type: %s, target: %s\n",
-						tok_type_to_str(rd->type),
-						rd->target);
-					if (rd->type == HEREDOC)
-					{
-						printf("fd: %d\n", rd->fd);
-						printf("content:\n");
-						line = get_next_line(rd->fd);
-						while (line)
-						{
-							printf("%s", line);
-							free(line);
-							line = get_next_line(rd->fd);
-						}
-					}
-					rd = rd->next;
-				}
-			}
-			cmd_cur = cmd_cur->next;
-			if (cmd_cur)
-				rd = cmd_cur->redirs;
-			n++;
-			i = 0;
-		}
-	}
-}
+// 	cmd_cur = sh->cmd;
+// 	n = 0;
+// 	while (cmd_cur)
+// 	{
+// 		i = 0;
+// 		rd = cmd_cur->redirs;
+// 		while (cmd_cur)
+// 		{
+// 			printf("cmd #%d\n", n);
+// 			if (cmd_cur->argv[i])
+// 			{
+// 				while (cmd_cur->argv[i])
+// 				{
+// 					printf("argv[%d]: %s\n", i, cmd_cur->argv[i]);
+// 					i++;
+// 				}
+// 			}
+// 			if (rd)
+// 			{
+// 				while (rd)
+// 				{
+// 					printf("redir: type: %s, target: %s\n",
+// 						tok_type_to_str(rd->type),
+// 						rd->target);
+// 					if (rd->type == HEREDOC)
+// 					{
+// 						printf("fd: %d\n", rd->fd);
+// 						printf("content:\n");
+// 						line = get_next_line(rd->fd);
+// 						while (line)
+// 						{
+// 							printf("%s", line);
+// 							free(line);
+// 							line = get_next_line(rd->fd);
+// 						}
+// 					}
+// 					rd = rd->next;
+// 				}
+// 			}
+// 			cmd_cur = cmd_cur->next;
+// 			if (cmd_cur)
+// 				rd = cmd_cur->redirs;
+// 			n++;
+// 			i = 0;
+// 		}
+// 	}
+// }
 
 int	parse_input(t_shell *sh, char *line)
 {

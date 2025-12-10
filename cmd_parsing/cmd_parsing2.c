@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 18:10:42 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/09 21:02:28 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/10 12:06:41 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ char	*find_command_in_path(char *cmd_name, t_env *env)
 	char	*temp;
 
 	path_value = ft_getenv("PATH", env);
-	if (path_value == NULL)
-		return (NULL);
+	if (path_value == NULL || ft_strchr(cmd_name, '/'))
+		return (ft_strdup(cmd_name));
 	paths = ft_split(path_value, ':');
 	if (paths == NULL)
 		return (NULL);

@@ -6,11 +6,45 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 20:06:37 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/09 20:07:06 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/10 16:28:16 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../minishell.h"
+
+void	safe_free(char *str)
+{
+	if (str != NULL)
+	{
+		free(str);
+	}
+}
+int	*check_append(int ex_flag, char *str)
+{
+	int		*flags;
+	int		flag;
+	char	*plus;
+
+	plus = ft_strchr(str, '+');
+	if (plus != NULL && plus[1] == '=')
+		flag = 1;
+	if (ex_flag && flag)
+		flags  =  (int[]){1, 1};
+	else if (ex_flag && !flag)
+		flags  =  (int[]){1, 0};
+	else if (!ex_flag && flag)
+		flags  =  (int[]){0, 1};
+	else
+		flags  =  (int[]){0, 0};
+	return (flags);
+}
+
+char	*get_delim(char *str, char *equal_sign)
+{
+	if (equal_sign && equal_sign > str && equal_sign[-1] == '+')
+		return (equal_sign - 1);
+	return (equal_sign);
+}
 
 // void	change_shlvl_value(t_env **env, char **cmd)
 // {

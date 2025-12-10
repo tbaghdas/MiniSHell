@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 18:54:53 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/08 19:52:22 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/10 16:02:33 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,23 +80,25 @@ int	check_for_export(char **str, t_shell *shell)
 	char	*key;
 	char	*value;
 	char	*equal_sign;
+	char	*delim;
 
 	while (*str)
 	{
 		if (check_export_arg(*str) != 0)
 			return (-1);
 		equal_sign = ft_strchr(*str, '=');
+		delim = get_delim(*str, equal_sign);
 		if (equal_sign != NULL)
 		{
-			key = ft_substr(*str, 0, equal_sign - *str);
+			key = ft_substr(*str, 0, delim - *str);
 			value = ft_strdup(equal_sign + 1);
 		}
 		else
 		{
-			key = ft_strdup(*str);
-			value = NULL;
+			key = ft_strdup((value = NULL, *str));
+			// value = NULL;
 		}
-		ft_setenv(key, 1, value, shell);
+		ft_setenv(key, check_append(1, *str), value, shell);
 		free_export_key_value(key, value);
 		str++;
 	}
@@ -120,7 +122,8 @@ int	check_export_arg(char *str)
 	i = 0;
 	while (str[i] != '\0' && str[i] != '=')
 	{
-		if (!ft_isalnum(str[i]) && str[i] != '_')
+		if (!ft_isalnum(str[i]) && str[i] != '_' &&
+			!(str[i] == '+' && str[i + 1] == '='))
 		{
 			print_export_err(str);
 			return (-1);

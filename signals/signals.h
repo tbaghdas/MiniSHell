@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 19:42:36 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/08 11:50:48 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/10 13:30:22 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ typedef struct s_shell	t_shell;
 void	sigint_handler(int sig);
 void	setup_signals(void);
 void	handle_ctrl_d(t_shell *shell);
-void	sigquit_handler(int sig);
 void	sig_monitoring(t_shell *shell);
 
 #endif
