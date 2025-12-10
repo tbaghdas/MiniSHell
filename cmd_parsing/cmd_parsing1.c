@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 19:02:03 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/10 13:33:02 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/11 03:32:46 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,27 +104,25 @@ int	execute_pipeline(t_cmd *start, t_shell *shell)
 {
 	t_cmd	*cur;
 	int		prev_fd;
-	int		status;
-	int		last_status;
 
 	prev_fd = -1;
 	cur = start;
-	last_status = 0;
 	while (cur)
 	{
 		if (this_while_body(&prev_fd, cur, shell) != 0)
 			return (1);
 		cur = cur->next;
 	}
-	while (wait(&status) > 0)
-	{
-		if (WIFEXITED(status))
-			last_status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			last_status = 128 + WTERMSIG(status);
-		shell->exit_code = last_status;
-	}
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
-	return (last_status);
+	signal_waiter(shell);
+	// while (wait(&status) > 0)
+	// {
+	// 	if (WIFEXITED(status))
+	// 		last_status = WEXITSTATUS(status);
+	// 	else if (WIFSIGNALED(status))
+	// 		last_status = 128 + WTERMSIG(status);
+	// 	shell->exit_code = last_status;
+	// }
+	// signal(SIGINT, sigint_handler);
+	// signal(SIGQUIT, SIG_IGN);
+	return (shell->exit_code);
 }

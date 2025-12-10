@@ -33,7 +33,7 @@ SRCS    = main.c \
 		  cmd_parsing/cmd_parsing1.c \
 		  cmd_parsing/cmd_parsing2.c \
 		  cmd_parsing/cmd_parsing3.c \
-		  cmd_parsingcmd_parsing4.c \
+		  cmd_parsing/cmd_parsing4.c \
 		  cmd_parsing/create_env.c \
 		  signals/signals.c
 #		  gnl/get_next_line.c \

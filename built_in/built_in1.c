@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 18:54:03 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/11 01:02:42 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/11 03:14:09 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	built_in_echo(char **str, t_shell *shell)
 {
-	char	*nb;
-
 	if (str == NULL || str[0] == NULL || str[1] == NULL
 		|| (str[1][0] == '\0' && str[2] == NULL)
 		|| (str[1][0] == '-' && str[1][1] == 'n'
@@ -23,15 +21,6 @@ int	built_in_echo(char **str, t_shell *shell)
 		return (write(1, "\n", 1), 0);
 	while (*(++str))
 	{
-		if (ft_strcmp(*str, "$?") == 0)
-		{
-			nb = ft_itoa(shell->exit_code);
-			write(1, nb, ft_strlen(nb));
-			if (*(str + 1) != NULL)
-				write(1, " ", 1);
-			free(nb);
-			continue ;
-		}
 		write(1, *str, ft_strlen(*str));
 		if (*(str + 1) != NULL)
 			write(1, " ", 1);

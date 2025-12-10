@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 18:10:42 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/11 01:22:30 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/11 03:16:13 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ int	cmd_parser(t_shell *shell)
 		//&& (cmd->redirs == NULL
 		//	|| (cmd->redirs != NULL && cmd->redirs->fd == -1)))
 		return (1);
-	if (cmd->redirs != NULL && cmd->redirs->fd != -1)
+	if (cmd->redirs != NULL)///'''''''''' && cmd->redirs->fd != -1)
 	{
-		return (run_external_or_builtin_in_parent(cmd, shell));
-		//apply_redirs(cmd);//////////////////////////////////
+		//return (run_external_or_builtin_in_parent(cmd, shell));/////remove run, do apply
+		apply_redirs(cmd);//////////////////////////////////
 	}
-	if (cmd->next == NULL && is_builtin(cmd->argv[0]) == 1
-		&& cmd->redirs == NULL)
+	if (cmd->next == NULL)// && is_builtin(cmd->argv[0]) == 1///////////////remove built in check and exec, do run..._child with fork() if the next is null
+		//&& cmd->redirs == NULL)
 	{
-		return (execute_builtin(cmd, shell));
+		return (run_child(cmd, shell));//execute_builtin(cmd, shell));
 	}
 	ret = execute_pipeline(cmd, shell);
 	return (ret);
@@ -80,7 +80,6 @@ int	execute_builtin(t_cmd *cmd, t_shell *shell)
 	return (0);
 }
 
-/////////////////////////////////////////search in current dir also
 char	*find_command_in_path(char *cmd_name, t_env *env)
 {
 	char	**paths;
