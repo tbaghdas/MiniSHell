@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 02:33:03 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/08 01:15:27 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/11 02:56:16 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ static int	count_words_until_pipe(t_token *tok)
 	{
 		if (tok->type == WORD)
 			count++;
-		else if (tok->type != WORD)
-			count--;
+		// else if (tok->type != WORD)
+		// 	count--;
 		tok = tok->next;
 	}
 	if (count < 0)
@@ -90,5 +90,5 @@ int	all_tokens_handler(t_token **tok, t_cmd **cmd_cur, t_shell *sh)
 				return (free_buffer_node(cmd_cur), 1);
 		*tok = (*tok)->next;
 	}
-	return (0);
+	return ((*cmd_cur)->argv[ctr] = NULL, 0);
 }

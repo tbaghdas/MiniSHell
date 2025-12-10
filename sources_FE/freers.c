@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 23:35:23 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/09 01:39:44 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/11 00:44:52 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@ static void	free_redirs(t_shell *sh)
 			free(sh->cmd->redirs->target);
 		if (sh->cmd->redirs->fd >= 0)
 		{
+			write(2, "Closing FD\n", 11); 
 			if (close(sh->cmd->redirs->fd) == -1)
-				perror("close");
+				perror("custom_close");
 			sh->cmd->redirs->fd = -1;
 		}
 		free(sh->cmd->redirs);

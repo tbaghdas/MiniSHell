@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 23:41:26 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/10 10:54:15 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/11 03:34:14 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	print_tokens(t_shell *sh)
-{
-	t_token	*tok_cur;
-
-	tok_cur = sh->tok;
-	while (tok_cur != NULL)
-	{
-		printf("TOKEN: %u ", tok_cur->type);
-		if (tok_cur->type == 0)
-			printf("CONTENT: %s\n", tok_cur->content);
-		else
-			printf("\n");
-		tok_cur = tok_cur->next;
-	}
-}
 
 int	lexer(char *line, t_shell *sh, t_qstate *qs)
 {

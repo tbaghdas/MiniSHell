@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 16:58:54 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/10 02:58:58 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/10 21:27:57 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	main_loop(t_shell *sh)
 		if (!line)
 		{
 			handle_ctrl_d(sh);
-			// ft_putstr_fd("exit\n", STDOUT_FILENO);
 			break ;
 		}
 		if (*line)

@@ -17,8 +17,9 @@ test.c
 *.sh
 .tmp
 
-#gnl
+#folders
 gnl/
+minishell_tester/
 
 #gitingore
-.gitignor	e
+.gitignore
