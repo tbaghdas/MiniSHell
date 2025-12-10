@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 18:46:17 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/07/10 18:46:20 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/11 00:18:42 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,6 @@ void	*ft_memchr(const void *s, int c, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 char	*ft_strdup(const char *src);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
+char	*ft_strjoin_null(char const *s1, char const *s2);
 
 #endif

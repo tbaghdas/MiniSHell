@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 18:10:42 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/10 12:06:41 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/11 01:22:30 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	cmd_parser(t_shell *shell)
 		return (1);
 	if (cmd->redirs != NULL && cmd->redirs->fd != -1)
 	{
-		return (run_external_or_builtin_in_child(cmd, shell));
+		return (run_external_or_builtin_in_parent(cmd, shell));
 		//apply_redirs(cmd);//////////////////////////////////
 	}
 	if (cmd->next == NULL && is_builtin(cmd->argv[0]) == 1

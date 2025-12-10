@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 19:06:05 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/08 15:18:02 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/11 01:25:59 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ int		iterate_redirs_and_open(t_redir *r, int *in_fd, int *out_fd);
 int		apply_final_dups(int in_fd, int out_fd);
 int		apply_redirs(t_cmd *cmd);
 void	free_split(char **paths);
+
+// functions in cmd_parsing/cmd_parsing4.c
+int		run_external_or_builtin_in_parent(t_cmd *cmd, t_shell *shell);
 
 // functions in cmd_parsing/create_env.c
 int		init_env(t_shell *shell, char **envp);

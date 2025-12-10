@@ -6,11 +6,11 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 20:06:37 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/10 16:28:16 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/11 01:03:29 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../minishell.h"
+#include "../minishell.h"
 
 void	safe_free(char *str)
 {
@@ -19,23 +19,25 @@ void	safe_free(char *str)
 		free(str);
 	}
 }
+
 int	*check_append(int ex_flag, char *str)
 {
 	int		*flags;
 	int		flag;
 	char	*plus;
 
+	flag = 0;
 	plus = ft_strchr(str, '+');
-	if (plus != NULL && plus[1] == '=')
+	if (plus != NULL && plus[0] != '\0' && plus[1] == '=')
 		flag = 1;
 	if (ex_flag && flag)
-		flags  =  (int[]){1, 1};
+		flags = (int []){1, 1};
 	else if (ex_flag && !flag)
-		flags  =  (int[]){1, 0};
+		flags = (int []){1, 0};
 	else if (!ex_flag && flag)
-		flags  =  (int[]){0, 1};
+		flags = (int []){0, 1};
 	else
-		flags  =  (int[]){0, 0};
+		flags = (int []){0, 0};
 	return (flags);
 }
 

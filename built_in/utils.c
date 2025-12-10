@@ -44,7 +44,7 @@ void	ft_setenv(char *key, int *ex_ap_flags, char *value, t_shell *shell)
 		{
 			if (current->value != NULL && ex_ap_flags[1] == 1)
 			{
-				tmp = ft_strjoin(current->value, value);
+				tmp = ft_strjoin_null(current->value, value);
 				free(current->value);
 				current->value = tmp;
 			}
