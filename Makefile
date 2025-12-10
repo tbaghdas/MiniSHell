@@ -11,6 +11,7 @@ SRCS    = main.c \
 		  sources_FE/expander.c \
 		  sources_FE/expander_env.c \
 		  sources_FE/expander_heredoc.c \
+		  sources_FE/expander_utils.c \
 		  sources_FE/freers.c \
 		  sources_FE/heredoc.c \
 		  sources_FE/lexer.c \
@@ -33,9 +34,9 @@ SRCS    = main.c \
 		  cmd_parsing/cmd_parsing2.c \
 		  cmd_parsing/cmd_parsing3.c \
 		  cmd_parsing/create_env.c \
-		  signals/signals.c 
-#         gnl/get_next_line.c \
-#         gnl/get_next_line_utils.c
+		  signals/signals.c
+#		  gnl/get_next_line.c \
+#		  gnl/get_next_line_utils.c
 
 OBJS    = $(SRCS:.c=.o)
 

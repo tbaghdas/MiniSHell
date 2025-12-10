@@ -6,27 +6,27 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 23:41:26 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/08 01:29:49 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/10 04:23:36 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-// void	print_tokens(t_shell *sh)
-// {
-// 	t_token	*tok_cur;
-	
-// 	tok_cur = sh->tok;
-// 	while (tok_cur != NULL)
-// 	{
-// 		printf("TOKEN: %u ", tok_cur->type);
-// 		if (tok_cur->type == 0)
-// 			printf("CONTENT: %s\n", tok_cur->content);
-// 		else
-// 			printf("\n");
-// 		tok_cur = tok_cur->next;
-// 	}
-// }
+static void	print_tokens(t_shell *sh)
+{
+	t_token	*tok_cur;
+
+	tok_cur = sh->tok;
+	while (tok_cur != NULL)
+	{
+		printf("TOKEN: %u ", tok_cur->type);
+		if (tok_cur->type == 0)
+			printf("CONTENT: %s\n", tok_cur->content);
+		else
+			printf("\n");
+		tok_cur = tok_cur->next;
+	}
+}
 
 int	lexer(char *line, t_shell *sh, t_qstate *qs)
 {
@@ -49,9 +49,9 @@ int	lexer(char *line, t_shell *sh, t_qstate *qs)
 			word_start(line, qs, &sh->tok, &i);
 		if (!line[i])
 			break ;
-	}	
+	}
 	tok_cur = sh->tok;
 	if (*qs != NONE)
-		return(syntax_errorer_quotes(*qs, sh), 1);
+		return (syntax_errorer_quotes(*qs, sh), 1);
 	return (0);
 }

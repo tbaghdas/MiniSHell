@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 19:44:23 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/08 14:28:29 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/10 04:25:57 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,11 @@ extern volatile sig_atomic_t	g_signum;
 
 typedef struct s_shell
 {
-	t_cmd	*cmd;
-	t_env	*env;
-	t_token	*tok;
-	int		exit_code;
+	t_cmd		*cmd;
+	t_env		*env;
+	t_token		*tok;
+	int			exit_code;
+	t_qstate	qs;
 }	t_shell;
 
 typedef struct s_env
@@ -60,8 +61,8 @@ typedef struct s_env
 }	t_env;
 
 void	free_front_end_shell(t_shell *sh);
-void	main_loop(t_shell *sh, char **envp);
-int		parse_input(t_shell *sh, char **envp, char *line);
+void	main_loop(t_shell *sh);
+int		parse_input(t_shell *sh, char *line);
 void	print_cmds(t_shell *sh);
 
 #endif

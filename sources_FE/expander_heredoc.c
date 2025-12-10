@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 01:30:11 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/09 01:21:27 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/10 02:53:02 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,27 @@
 
 void	heredoc_expander(char **line, t_shell *sh)
 {
-	int		i;
-	int		j;
+	char	*src;
+	char	*dst;
 	char	*buf;
 
-	i = 0;
-	j = 0;
+	src = *line;
 	buf = malloc(VAR_NAME_MAX * sizeof(char));
 	if (!buf)
 		fatal_error("malloc", sh);
-	while ((*line)[i])
+	dst = buf;
+	while (*src)
 	{
-		if ((*line)[i] == '$')
+		if (*src == '$')
 		{
-			if (env_extractor(*line, buf, &i, &j))
-				fatal_error("malloc", sh);
+			if (!exit_coder(&src, &dst, sh))
+				env_extractor(&src, &dst, sh);
 			continue ;
 		}
-		buf[j++] = (*line)[i++];
+		else
+			*dst++ = *src++;
 	}
-	buf[j] = '\0';
+	*dst = '\0';
 	free(*line);
 	*line = buf;
 }

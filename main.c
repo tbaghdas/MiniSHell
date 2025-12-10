@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 16:48:28 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/08 14:29:08 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/10 02:59:46 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, char **argv, char **envp)
 	if (init_env(&sh, envp) != 0)
 		return (1);
 	//init_shell(&sh, envp);
-	main_loop(&sh, envp);
+	main_loop(&sh);
 	free_front_end_shell(&sh);
 	free_env(&sh);
 	return (sh.exit_code);

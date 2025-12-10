@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 16:58:54 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/08 15:11:52 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/10 02:58:58 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	main_loop(t_shell *sh, char **envp)
+void	main_loop(t_shell *sh)
 {
 	char	*line;
 
@@ -28,13 +28,13 @@ void	main_loop(t_shell *sh, char **envp)
 		}
 		if (*line)
 			add_history(line);
-		if (parse_input(sh, envp, line) != 0)
+		if (parse_input(sh, line) != 0)
 		{
 			free_front_end_shell(sh);
 			continue ;
 		}
 		process_heredoc(sh);
-		//print_cmds(sh);
+		// print_cmds(sh);
 		cmd_parser(sh);
 		free(line);
 		free_front_end_shell(sh);

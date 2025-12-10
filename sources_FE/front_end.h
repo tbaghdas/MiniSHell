@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   front_end.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 01:04:05 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/09 15:14:50 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/10 04:24:20 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,17 @@ void	cmd_lstclear(t_cmd **lst, void (*del)(void*));
 int		process_heredoc(t_shell *sh);
 
 //EXPANDER
-int		env_extractor(const char *line, char *buf, int *i, int *j);
+void	actual_expander(char **line, t_shell *sh, t_toktyp t);
 void	expander(t_shell *sh);
+//expander utils
+void	env_extractor(char **line, char **buf, t_shell *sh);
+int		exit_coder(char **src, char **dst, t_shell *sh);
+int		expand_needed(char *s, t_qstate qs, t_toktyp type);
+void	handle_cmds(t_shell *sh);
+void	handle_redirs(t_shell *sh);
 void	heredoc_expander(char **line, t_shell *sh);
 int		legit(char c);
+int		quote_changes(char c, t_qstate qs);
 
 //error & clean-up utils & debug
 void	fatal_error(char *line, t_shell *sh);
