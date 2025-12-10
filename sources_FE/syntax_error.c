@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 20:44:44 by ilya              #+#    #+#             */
-/*   Updated: 2025/12/09 01:48:57 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/10 23:33:45 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,17 @@ static char	*qstate_to_str(t_qstate t)
 
 void	syntax_errorer_quotes(t_qstate qs, t_shell *sh)
 {
-	ft_putstr_fd("minishell: unexpected EOF while looking for matching `", 2);
+	ft_putstr_fd("minishell: unclosed quote: `", 2);
 	ft_putstr_fd(qstate_to_str(qs), 2);
 	ft_putstr_fd("'\n", 2);
-	sh->exit_code = 2; //TODO?
+	sh->exit_code = 2;
+}
+
+void	syntax_errorer_heredoc(t_redir *rd, t_shell *sh)
+{
+	ft_putstr_fd("bash: warning: ", 2); 
+	ft_putstr_fd("here-document delimited by end-of-file (wanted `", 2);
+	ft_putstr_fd(rd->target, 2);
+	ft_putstr_fd("')\n", 2);
+	sh->exit_code = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 01:04:05 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/10 04:24:20 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/11 03:23:11 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void	cmd_lstclear(t_cmd **lst, void (*del)(void*));
 
 //HEREDOC
 int		process_heredoc(t_shell *sh);
+void	signal_waiter(t_shell *sh);
 
 //EXPANDER
 void	actual_expander(char **line, t_shell *sh, t_toktyp t);
@@ -115,5 +116,6 @@ int		quote_changes(char c, t_qstate qs);
 void	fatal_error(char *line, t_shell *sh);
 void	syntax_errorer_quotes(t_qstate qs, t_shell *sh);
 void	syntax_errorer_redirs(char *line, t_shell *sh);
+void	syntax_errorer_heredoc(t_redir *rd, t_shell *sh);
 
 #endif
