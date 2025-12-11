@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 01:11:26 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/11 03:23:32 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/11 12:38:19 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,56 @@ int	run_child(t_cmd *cmd, t_shell *shell)
 		// child_process(pipefd, prev_fd, cur, shell);
 	}
 	signal_waiter(shell);
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
 	// closing_fds(pipefd, prev_fd, cur->next);
 	return (0);
+}
+void	my_execve(char *path, char **argv, char **envp, t_shell *shell)
+{
+	struct stat st;
+
+    if (stat(path, &st) == 0)
+    {
+        if (S_ISDIR(st.st_mode))
+        {
+            ft_putstr_fd("minishell: ", 2);
+            ft_putstr_fd(path, 2);
+            ft_putstr_fd(": Is a directory\n", 2);
+            // g_exit_status = 126;
+			exit((free(path), free_all(shell, envp), 126));//126
+        }
+    }
+    //;f (stat(path, &st) == 0 && S_ISDIR(st.st_mode))
+		// return (1);
+	// if  (execve(path, argv, envp) == -1)
+	// {
+    // 	// perror("minishell");
+
+	// 	perror(path);
+	// 	exit((free(path), free_all(shell, envp), 126));
+	// }
+	// exit((free(path), free_all(shell, envp), 1));
+
+
+		
+    // g_exit_status = 126;
+	// exit((free(path), free_all(shell, envp), errno));//126
+	///0000000000000
+	if  (execve(path, argv, envp) == -1)
+    {
+        int exit_code = 126; // Default to 126 for typical execve failures (e.g., EACCES)
+        
+        // Handle "Command not found" or "No such file or directory" (exit 127)
+        if (errno == ENOENT || errno == ENOTDIR)
+            exit_code = 127;
+        // You might need to check EFAULT too, but that's less common for shell execution.
+
+        perror(path);
+        exit((free(path), free_all(shell, envp), exit_code));
+    }
+
+	exit((free(path), free_all(shell, envp), 1));
+	//0000000000000
+
 }

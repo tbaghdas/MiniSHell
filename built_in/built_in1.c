@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 18:54:03 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/11 03:14:09 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/11 06:05:03 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	built_in_cd(char **path, t_shell *shell)
 		new_path = path[1];
 	old_wd = getcwd(NULL, 0);
 	if (chdir(new_path) != 0)
-		return (shell->exit_code = 1, print_cd_err(new_path), 1);
+		return (safe_free(old_wd), shell->exit_code = 1, cd_err(new_path), 1);
 	ft_setenv("OLDPWD", (int []){1, 0}, old_wd, shell);
 	return (safe_free(old_wd), shell->exit_code = 0, 0);
 }

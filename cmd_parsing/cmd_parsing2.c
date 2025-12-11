@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 18:10:42 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/11 03:16:13 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/11 12:57:22 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,62 @@ int	cmd_parser(t_shell *shell)
 {
 	int		ret;
 	t_cmd	*cmd;
+	int		i;
 
 	if (shell == NULL)
 		return (1);
 	cmd = shell->cmd;
 	if (cmd == NULL || (cmd->argv == NULL || cmd->argv[0] == NULL))
-		//&& (cmd->redirs == NULL
-		//	|| (cmd->redirs != NULL && cmd->redirs->fd == -1)))
 		return (1);
-	if (cmd->redirs != NULL)///'''''''''' && cmd->redirs->fd != -1)
+
+	// i = 0;
+	// command = cmd->argv[0];
+	// while (cmd->argv[i] && cmd->argv[i][0] == '\0')
+	// 	i++;
+	// if (cmd->argv[i])
+	// 	command = cmd->argv[i];
+
+i = 0;
+int j = 0;
+
+/* Count empty leading args */
+while (cmd->argv[i] && cmd->argv[i][0] == '\0')
+{
+    free(cmd->argv[i]);   // FREE THE EMPTY STRING
+    i++;
+}
+
+/* If we removed some, shift others left */
+if (i > 0)
+{
+    while (cmd->argv[i])
+    {
+        cmd->argv[j] = cmd->argv[i];
+        j++;
+        i++;
+    }
+    cmd->argv[j] = NULL;
+}
+
+/* If everything was empty → no command */
+if (cmd->argv[0] == NULL)
+    return (0);
+
+
+	
+ 	if (cmd->next == NULL && is_builtin(cmd->argv[0]) == 1)
 	{
-		//return (run_external_or_builtin_in_parent(cmd, shell));/////remove run, do apply
-		apply_redirs(cmd);//////////////////////////////////
+		int original_stdout = dup(STDOUT_FILENO);
+		int original_stdin = dup(STDIN_FILENO);
+		apply_redirs(cmd);
+		execute_builtin(cmd, shell);
+		dup2(original_stdout, 1);
+		close(original_stdout);
+		dup2(original_stdin, 0);
+		close(original_stdin);
+		return (shell->exit_code);
 	}
-	if (cmd->next == NULL)// && is_builtin(cmd->argv[0]) == 1///////////////remove built in check and exec, do run..._child with fork() if the next is null
-		//&& cmd->redirs == NULL)
-	{
-		return (run_child(cmd, shell));//execute_builtin(cmd, shell));
-	}
+	
 	ret = execute_pipeline(cmd, shell);
 	return (ret);
 }
@@ -89,7 +127,8 @@ char	*find_command_in_path(char *cmd_name, t_env *env)
 	char	*temp;
 
 	path_value = ft_getenv("PATH", env);
-	if (path_value == NULL || ft_strchr(cmd_name, '/'))
+	if (path_value == NULL || ft_strchr(cmd_name, '/') || !cmd_name
+		|| !cmd_name[0])
 		return (ft_strdup(cmd_name));
 	paths = ft_split(path_value, ':');
 	if (paths == NULL)

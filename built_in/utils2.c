@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 18:54:53 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/11 01:05:18 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/11 05:57:59 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int	check_export_arg(char *str)
 		print_export_err("'");
 		return (-1);
 	}
-	if (ft_isdigit(str[0]))
+	if (ft_isdigit(str[0]) || (str[0] == '=' && str[1] == '\0'))
 	{
 		print_export_err(str);
 		return (-1);

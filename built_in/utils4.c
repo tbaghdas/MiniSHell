@@ -6,13 +6,13 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 15:59:48 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/09 20:06:20 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/11 06:05:03 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	print_cd_err(char *path)
+void	cd_err(char *path)
 {
 	write(2, "minishell: cd: ", 15);
 	if (path != NULL)

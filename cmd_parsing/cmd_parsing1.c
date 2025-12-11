@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 19:02:03 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/11 03:32:46 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/11 10:55:50 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ int	run_external_or_builtin_in_child(t_cmd *cmd, t_shell *shell)
 		exit((free_all(shell, NULL), 127));
 	}
 	envp = get_env_array(shell->env, 1);
-	execve(cmd_path, cmd->argv, envp);
-	print_execve_err(cmd_path);
-	exit((free(cmd_path), free_all(shell, envp), 126));
+	if (cmd_path[0] != '\0')
+		print_execve_err((my_execve(cmd_path, cmd->argv, envp, shell), cmd_path));
+	exit((free(cmd_path), free_all(shell, envp), 0));
 }
 
 void	child_process(int pipefd[2], int *prev_fd, t_cmd *cur, t_shell *shell)
@@ -122,7 +122,7 @@ int	execute_pipeline(t_cmd *start, t_shell *shell)
 	// 		last_status = 128 + WTERMSIG(status);
 	// 	shell->exit_code = last_status;
 	// }
-	// signal(SIGINT, sigint_handler);
-	// signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
 	return (shell->exit_code);
 }
