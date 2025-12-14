@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 23:41:26 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/11 03:34:14 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/15 01:02:34 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	lexer(char *line, t_shell *sh, t_qstate *qs)
 {
 	size_t	i;
-	t_token	*tok_cur;
 	int		len;
 
 	i = 0;
@@ -34,7 +33,6 @@ int	lexer(char *line, t_shell *sh, t_qstate *qs)
 		if (!line[i])
 			break ;
 	}
-	tok_cur = sh->tok;
 	if (*qs != NONE)
 		return (syntax_errorer_quotes(*qs, sh), 1);
 	return (0);

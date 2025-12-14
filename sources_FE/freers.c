@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 23:35:23 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/11 00:44:52 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/11 06:08:52 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static void	free_tokens(t_shell *sh)
 {
 	t_token	*tmp;
 
+	if (!sh)
+		return ;
 	while (sh->tok)
 	{
 		tmp = sh->tok->next;
@@ -30,6 +32,8 @@ static void	free_redirs(t_shell *sh)
 {
 	t_redir	*tmp;
 
+	if (!sh || !sh->cmd)
+		return ;
 	while (sh->cmd->redirs)
 	{
 		tmp = sh->cmd->redirs->next;
@@ -37,9 +41,8 @@ static void	free_redirs(t_shell *sh)
 			free(sh->cmd->redirs->target);
 		if (sh->cmd->redirs->fd >= 0)
 		{
-			write(2, "Closing FD\n", 11); 
 			if (close(sh->cmd->redirs->fd) == -1)
-				perror("custom_close");
+				perror("close");
 			sh->cmd->redirs->fd = -1;
 		}
 		free(sh->cmd->redirs);
@@ -51,22 +54,24 @@ static void	free_cmd(t_shell *sh)
 {
 	int		i;
 
+	if (!sh || !sh->cmd)
+		return ;
 	i = 0;
-	while (sh->cmd->argv[i])
-		free(sh->cmd->argv[i++]);
-	free(sh->cmd->argv);
+	if (sh->cmd->argv)
+	{
+		while (sh->cmd->argv[i])
+			free(sh->cmd->argv[i++]);
+		free(sh->cmd->argv);
+		sh->cmd->argv = NULL;
+	}
 	if (sh->cmd->redirs)
 		free_redirs(sh);
 }
 
 void	free_front_end_shell(t_shell *sh)
 {
-	int		i;
-	int		j;
 	t_cmd	*tmp;
 
-	i = 0;
-	j = 0;
 	if (!sh)
 		return ;
 	free_tokens(sh);
@@ -77,4 +82,6 @@ void	free_front_end_shell(t_shell *sh)
 		free(sh->cmd);
 		sh->cmd = tmp;
 	}
+	sh->tok = NULL;
+	sh->cmd = NULL;
 }

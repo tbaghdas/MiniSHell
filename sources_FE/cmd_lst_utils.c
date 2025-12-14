@@ -6,23 +6,11 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 01:11:34 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/05 03:43:40 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/11 05:15:53 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	word_counter(t_token *tok_head)
-{
-	int	ctr;
-
-	ctr = 0;
-	while (tok_head->next && tok_head->type == WORD)
-	{
-		ctr++;
-	}
-	return (ctr);
-}
 
 t_cmd	*cmd_lst_new(void)
 {

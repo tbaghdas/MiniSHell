@@ -3,87 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lex_par_exp.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 18:32:24 by ilya              #+#    #+#             */
-/*   Updated: 2025/12/10 10:55:28 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/11 05:09:02 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-char	*tok_type_to_str(t_toktyp t)
-{
-	if (t == WORD)
-		return ("WORD");
-	if (t == PIPE)
-		return ("PIPE");
-	if (t == REDIR_IN)
-		return ("REDIR_IN");
-	if (t == HEREDOC)
-		return ("HEREDOC");
-	if (t == REDIR_OUT)
-		return ("REDIR_OUT");
-	if (t == REDIR_APP)
-		return ("REDIR_APP");
-	return ("UNKNOWN");
-}
-
-// void	print_cmds(t_shell *sh)
-// {
-// 	int		i;
-// 	int		n;
-// 	char	*line;
-// 	t_cmd	*cmd_cur;
-// 	t_redir	*rd;
-
-// 	cmd_cur = sh->cmd;
-// 	n = 0;
-// 	while (cmd_cur)
-// 	{
-// 		i = 0;
-// 		rd = cmd_cur->redirs;
-// 		while (cmd_cur)
-// 		{
-// 			printf("cmd #%d\n", n);
-// 			if (cmd_cur->argv[i])
-// 			{
-// 				while (cmd_cur->argv[i])
-// 				{
-// 					printf("argv[%d]: %s\n", i, cmd_cur->argv[i]);
-// 					i++;
-// 				}
-// 			}
-// 			if (rd)
-// 			{
-// 				while (rd)
-// 				{
-// 					printf("redir: type: %s, target: %s\n",
-// 						tok_type_to_str(rd->type),
-// 						rd->target);
-// 					if (rd->type == HEREDOC)
-// 					{
-// 						printf("fd: %d\n", rd->fd);
-// 						printf("content:\n");
-// 						line = get_next_line(rd->fd);
-// 						while (line)
-// 						{
-// 							printf("%s", line);
-// 							free(line);
-// 							line = get_next_line(rd->fd);
-// 						}
-// 					}
-// 					rd = rd->next;
-// 				}
-// 			}
-// 			cmd_cur = cmd_cur->next;
-// 			if (cmd_cur)
-// 				rd = cmd_cur->redirs;
-// 			n++;
-// 			i = 0;
-// 		}
-// 	}
-// }
 
 int	parse_input(t_shell *sh, char *line)
 {
@@ -92,7 +19,6 @@ int	parse_input(t_shell *sh, char *line)
 	qs = NONE;
 	if (lexer(line, sh, &qs))
 		return (1);
-	// print_tokens(sh);
 	if (sh->tok && sh->tok->type == PIPE)
 		return (syntax_errorer_redirs(sh->tok->content, sh), 1);
 	if (parser(sh->tok, sh))

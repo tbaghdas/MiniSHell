@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 20:44:44 by ilya              #+#    #+#             */
-/*   Updated: 2025/12/10 23:33:45 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/15 02:07:05 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	syntax_errorer_redirs(char *line, t_shell *sh)
 	ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
 	ft_putstr_fd(line, 2);
 	ft_putstr_fd("'\n", 2);
-	sh->exit_code = 2; //TODO?
+	sh->exit_code = 2;
 }
 
 void	fatal_error(char *line, t_shell *sh)
@@ -53,7 +53,7 @@ void	syntax_errorer_quotes(t_qstate qs, t_shell *sh)
 
 void	syntax_errorer_heredoc(t_redir *rd, t_shell *sh)
 {
-	ft_putstr_fd("bash: warning: ", 2); 
+	ft_putstr_fd("minishell: warning: ", 2);
 	ft_putstr_fd("here-document delimited by end-of-file (wanted `", 2);
 	ft_putstr_fd(rd->target, 2);
 	ft_putstr_fd("')\n", 2);
