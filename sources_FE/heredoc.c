@@ -3,35 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 22:54:05 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/15 19:43:02 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/16 02:31:33 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	signal_waiter(t_shell *sh)
-{
-	int		status;
-	int		last_status;
-
-	last_status = 0;
-	while (wait(&status) > 0)
-	{
-		if (WIFEXITED(status))
-			last_status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			last_status = 128 + WTERMSIG(status);
-		sh->exit_code = last_status;
-	}
-}
-
 static void	heredoc_read_child(int wfd, t_redir *rd, t_shell *sh)
 {
 	char	*line;
 
+	signal(SIGINT, heredoc_sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
 	while (42)
 	{
 		line = readline(">");
@@ -52,9 +38,7 @@ static void	heredoc_read_child(int wfd, t_redir *rd, t_shell *sh)
 	}
 	close(wfd);
 	safe_free(line);
-	free_front_end_shell(sh);
-	free_env(sh);
-	exit(0);
+	exit((free_front_end_shell(sh), free_env(sh), 0));
 }
 
 static int	temp_file_writer(t_redir *rd, t_shell *sh)
@@ -71,27 +55,29 @@ static int	temp_file_writer(t_redir *rd, t_shell *sh)
 	if (pid == -1)
 		fatal_error("fork", sh);
 	if (pid == 0)
-	{
-		signal(SIGINT, SIG_DFL);
 		heredoc_read_child(wfd, rd, sh);
-	}
-	signal_waiter(sh);
+	close(wfd);
+	if (wait_heredoc_child(pid, sh) == -1)
+		perror("waitpid");
 	signal(SIGINT, sigint_handler);
-	return (wfd);
+	signal(SIGQUIT, SIG_IGN);
+	if (sh->exit_code == 130)
+		return (-1);
+	return (0);
 }
 
 static int	heredoc_writer(t_redir *rd, t_shell *sh)
 {
-	int		wfd;
 	int		rfd;
 
-	wfd = temp_file_writer(rd, sh);
+	if (temp_file_writer(rd, sh) == -1)
+	{
+		unlink(".tmp");
+		return (-1);
+	}
 	rfd = open(".tmp", O_RDONLY, 0600);
 	if (rfd == -1)
 		fatal_error("open", sh);
-	if (close(wfd) == -1)
-		fatal_error("close", sh);
-	wfd = -1;
 	unlink(".tmp");
 	return (rfd);
 }
@@ -108,7 +94,11 @@ int	process_heredoc(t_shell *sh)
 		while (rd)
 		{
 			if (rd->type == HEREDOC)
+			{
 				rd->fd = heredoc_writer(rd, sh);
+				if (rd->fd == -1)
+					return (-1);
+			}
 			rd = rd->next;
 		}
 		cmd_cur = cmd_cur->next;

@@ -20,6 +20,7 @@ SRCS    = main.c \
 		  sources_FE/parser.c \
 		  sources_FE/parser_utils.c \
 		  sources_FE/redir_lst_utils.c \
+		  sources_FE/signal_utils.c \
 		  sources_FE/syntax_error.c \
 		  sources_FE/token_lst_utils.c \
 		  sources_FE/tokenizer.c \

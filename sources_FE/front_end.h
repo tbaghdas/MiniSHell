@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 01:04:05 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/11 03:23:11 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/16 01:57:16 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,10 @@ void	cmd_lstclear(t_cmd **lst, void (*del)(void*));
 
 //HEREDOC
 int		process_heredoc(t_shell *sh);
+//heredoc utils
+void	heredoc_sigint_handler(int sig);
 void	signal_waiter(t_shell *sh);
+int		wait_heredoc_child(pid_t pid, t_shell *sh);
 
 //EXPANDER
 void	actual_expander(char **line, t_shell *sh, t_toktyp t);
