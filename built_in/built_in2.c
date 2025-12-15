@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 18:54:20 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/15 17:24:54 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/15 19:16:57 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	built_in_env(char **args, t_shell *shell)
 	{
 		return (shell->exit_code = 1, 1);
 	}
-	return (0);
+	return (shell->exit_code = 0, 0);
 }
 
 int	built_in_exit(char **args, t_shell *shell)
