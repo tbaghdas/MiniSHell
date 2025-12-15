@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 01:11:26 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/15 17:21:34 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/15 18:27:37 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ int	execute_single_builtin(t_cmd *cmd, t_shell *shell)
 		perror("dup");
 		return (shell->exit_code = 1, 1);
 	}
-	apply_redirs(cmd);
+	if (apply_redirs(cmd) < 0)
+		return (shell->exit_code = 1, perror(" "), 1);
 	execute_builtin(cmd, shell);
 	if (dup2(original_stdout, STDOUT_FILENO) == -1)
 	{
