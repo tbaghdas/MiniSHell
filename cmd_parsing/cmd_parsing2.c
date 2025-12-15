@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 18:10:42 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/11 12:57:22 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/15 17:16:26 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,66 +14,30 @@
 
 int	cmd_parser(t_shell *shell)
 {
-	int		ret;
 	t_cmd	*cmd;
 	int		i;
+	int		j;
 
 	if (shell == NULL)
 		return (1);
 	cmd = shell->cmd;
 	if (cmd == NULL || (cmd->argv == NULL || cmd->argv[0] == NULL))
 		return (1);
-
-	// i = 0;
-	// command = cmd->argv[0];
-	// while (cmd->argv[i] && cmd->argv[i][0] == '\0')
-	// 	i++;
-	// if (cmd->argv[i])
-	// 	command = cmd->argv[i];
-
-i = 0;
-int j = 0;
-
-/* Count empty leading args */
-while (cmd->argv[i] && cmd->argv[i][0] == '\0')
-{
-    free(cmd->argv[i]);   // FREE THE EMPTY STRING
-    i++;
-}
-
-/* If we removed some, shift others left */
-if (i > 0)
-{
-    while (cmd->argv[i])
-    {
-        cmd->argv[j] = cmd->argv[i];
-        j++;
-        i++;
-    }
-    cmd->argv[j] = NULL;
-}
-
-/* If everything was empty → no command */
-if (cmd->argv[0] == NULL)
-    return (0);
-
-
-	
- 	if (cmd->next == NULL && is_builtin(cmd->argv[0]) == 1)
+	i = 0;
+	j = 0;
+	while (cmd->argv[i] && cmd->argv[i][0] == '\0')
+		free(cmd->argv[i++]);
+	if (i > 0)
 	{
-		int original_stdout = dup(STDOUT_FILENO);
-		int original_stdin = dup(STDIN_FILENO);
-		apply_redirs(cmd);
-		execute_builtin(cmd, shell);
-		dup2(original_stdout, 1);
-		close(original_stdout);
-		dup2(original_stdin, 0);
-		close(original_stdin);
-		return (shell->exit_code);
+		while (cmd->argv[i])
+			cmd->argv[j++] = cmd->argv[i++];
+		cmd->argv[j] = NULL;
 	}
-	
-	ret = execute_pipeline(cmd, shell);
-	return (ret);
+	if (cmd->argv[0] == NULL)
+		return (0);
+	if (cmd->next == NULL && is_builtin(cmd->argv[0]) == 1)
+		return (execute_single_builtin(cmd, shell));
+	return (execute_pipeline(cmd, shell));
 }
 
 int	is_builtin(char *cmd_name)
@@ -152,9 +116,9 @@ int	handle_open_redir(t_redir *r)
 	if (r->type == REDIR_IN)
 		return (open(r->target, O_RDONLY));
 	else if (r->type == REDIR_OUT)
-		return (open(r->target, O_WRONLY | O_CREAT | O_TRUNC, 00644));
+		return (open(r->target, O_WRONLY | O_CREAT | O_TRUNC, 0644));
 	else if (r->type == REDIR_APP)
-		return (open(r->target, O_WRONLY | O_CREAT | O_APPEND, 00644));
+		return (open(r->target, O_WRONLY | O_CREAT | O_APPEND, 0644));
 	else if (r->type == HEREDOC)
 		return (r->fd);
 	return (-2);

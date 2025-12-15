@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 18:54:20 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/11 13:23:52 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/15 17:24:54 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,8 @@ int	built_in_exit(char **args, t_shell *shell)
 	{
 		if (args[1] != NULL && isdigit_str(args[1]) == -1)
 		{
-			// write(2, "exit\nminishell: exit: ", 22);
-			// write (2, "exit\nminishell: ", 16);
 			write(2, args[1], ft_strlen(args[1]));
 			write (2, ": numeric argument required\n", 28);
-			// write(2, ": numeric argument required\n", 28);
 			shell->exit_code = 2;
 		}
 		free_all(shell, NULL);

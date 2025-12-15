@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 19:06:05 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/11 07:42:04 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/15 17:13:44 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ int		apply_redirs(t_cmd *cmd);
 void	free_split(char **paths);
 
 // functions in cmd_parsing/cmd_parsing4.c
-// int		run_external_or_builtin_in_parent(t_cmd *cmd, t_shell *shell);
 int		run_child(t_cmd *cmd, t_shell *shell);
 void	my_execve(char *path, char **argv, char **envp, t_shell *shell);
+int		execute_single_builtin(t_cmd *cmd, t_shell *shell);
 
 // functions in cmd_parsing/create_env.c
 int		init_env(t_shell *shell, char **envp);

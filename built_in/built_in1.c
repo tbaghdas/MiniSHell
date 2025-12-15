@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 18:54:03 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/11 06:05:03 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/15 17:25:13 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,30 @@
 
 int	built_in_echo(char **str, t_shell *shell)
 {
+	int	flag;
+
+	flag = 0;
 	if (str == NULL || str[0] == NULL || str[1] == NULL
-		|| (str[1][0] == '\0' && str[2] == NULL)
-		|| (str[1][0] == '-' && str[1][1] == 'n'
-		&& str[1][2] == '\0' && str[2] == NULL))
-		return (write(1, "\n", 1), 0);
+		|| (str[1][0] == '\0' && str[2] == NULL))
+		return (shell->exit_code = 0, write(1, "\n", 1), 0);
+	if (str[1][0] == '-' && str[1][1] == 'n'
+		&& str[1][2] == '\0' && str[2] == NULL)
+		return (shell->exit_code = 0, 0);
+	if (str[1][0] == '-' && str[1][1] == 'n'
+		&& str[1][2] == '\0')
+	{
+		flag = 1;
+		str++;
+	}
 	while (*(++str))
 	{
 		write(1, *str, ft_strlen(*str));
 		if (*(str + 1) != NULL)
 			write(1, " ", 1);
 	}
-	return (shell->exit_code = 0, write(1, "\n", 1), 0);
+	if (!flag)
+		write(1, "\n", 1);
+	return (shell->exit_code = 0, 0);
 }
 
 int	built_in_cd(char **path, t_shell *shell)

@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 18:10:55 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/11 04:32:50 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/15 17:16:44 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	iterate_redirs_and_open(t_redir *r, int *in_fd, int *out_fd)
 	while (r != NULL)
 	{
 		new_fd = handle_open_redir(r);
-		if (new_fd == -1)
+		if (new_fd < 0)
 			return (close_fds(*in_fd, *out_fd), -1);
 		if (r->type == REDIR_IN || r->type == HEREDOC)
 		{
@@ -55,7 +55,6 @@ int	apply_final_dups(int in_fd, int out_fd)
 	{
 		if (dup2(in_fd, STDIN_FILENO) == -1)
 			ret_val = -1;
-		//close(in_fd);
 	}
 	if (out_fd != -1)
 	{

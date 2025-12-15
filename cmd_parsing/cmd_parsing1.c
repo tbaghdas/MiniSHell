@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 19:02:03 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/11 10:55:50 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/15 17:24:10 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	run_external_or_builtin_in_child(t_cmd *cmd, t_shell *shell)
 	}
 	envp = get_env_array(shell->env, 1);
 	if (cmd_path[0] != '\0')
-		print_execve_err((my_execve(cmd_path, cmd->argv, envp, shell), cmd_path));
+		print_exe_err((my_execve(cmd_path, cmd->argv, envp, shell), cmd_path));
 	exit((free(cmd_path), free_all(shell, envp), 0));
 }
 
@@ -114,14 +114,6 @@ int	execute_pipeline(t_cmd *start, t_shell *shell)
 		cur = cur->next;
 	}
 	signal_waiter(shell);
-	// while (wait(&status) > 0)
-	// {
-	// 	if (WIFEXITED(status))
-	// 		last_status = WEXITSTATUS(status);
-	// 	else if (WIFSIGNALED(status))
-	// 		last_status = 128 + WTERMSIG(status);
-	// 	shell->exit_code = last_status;
-	// }
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
 	return (shell->exit_code);

@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 15:59:48 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/11 06:05:03 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/15 17:23:30 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	cd_err(char *path)
 	perror("");
 }
 
-void	print_execve_err(char *cmd_path)
+void	print_exe_err(char *cmd_path)
 {
 	write(2, "minishell: ", 11);
 	if (cmd_path != NULL)
