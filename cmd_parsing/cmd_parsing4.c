@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 01:11:26 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/15 18:27:37 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/16 18:04:40 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,13 @@ int	execute_single_builtin(t_cmd *cmd, t_shell *shell)
 	}
 	close(original_stdin);
 	return (shell->exit_code);
+}
+
+void	waited(void)
+{
+	int	i;
+
+	i = 0;
+	while (i < 11000000)
+		i++;
 }

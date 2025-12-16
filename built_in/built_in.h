@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 19:13:00 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/15 19:32:23 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/16 18:07:34 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		list_size(t_env *env);
 
 // functions in built_in/utils4.c
 void	cd_err(char *path);
-void	print_exe_err(char *cmd_path, t_shell *shell);
+void	ex_err(char *cmd_path, t_shell *shell);
 void	print_cmd_not_found(char *cmd_name);
 void	print_export_style(char *str);
 void	setting_line(char **line, t_env *current);

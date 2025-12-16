@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 18:10:55 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/15 18:16:35 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/16 18:04:55 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int	apply_final_dups(int in_fd, int out_fd)
 	{
 		if (dup2(in_fd, STDIN_FILENO) == -1)
 			ret_val = -1;
-		// close(in_fd);
 	}
 	if (out_fd != -1)
 	{

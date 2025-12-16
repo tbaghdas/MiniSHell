@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 19:02:03 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/15 19:38:17 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/16 18:08:34 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	run_external_or_builtin_in_child(t_cmd *cmd, t_shell *shell)
 	}
 	envp = get_env_array(shell->env, 1);
 	if (cmd_path[0] != '\0')
-		print_exe_err((my_execve(cmd_path, cmd->argv, envp, shell), cmd_path), shell);
+		ex_err((my_execve(cmd_path, cmd->argv, envp, shell), cmd_path), shell);
 	exit((free(cmd_path), free_all(shell, envp), 0));
 }
 
@@ -96,8 +96,8 @@ int	this_while_body(int *prev_fd, t_cmd *cur, t_shell *shell)
 		signal(SIGQUIT, SIG_DFL);
 		child_process(pipefd, prev_fd, cur, shell);
 	}
-	closing_fds(pipefd, prev_fd, cur->next);
-	return (0);
+	waited();
+	return (closing_fds(pipefd, prev_fd, cur->next), 0);
 }
 
 int	execute_pipeline(t_cmd *start, t_shell *shell)

@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 18:54:03 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/15 17:25:13 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/16 18:01:26 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	built_in_cd(char **path, t_shell *shell)
 		new_path = ft_getenv("HOME", shell->env);
 		if (new_path == NULL)
 			return (shell->exit_code = 1,
-				write(2, "minishell: cd: HOME not set\n", 30), 1);
+				write(2, "minishell: cd: HOME not set\n", 28), 1);
 		if (path[1] != NULL && path[1][0] == '~' && path[1][1] != '\0')
 			new_path = ft_strjoin(new_path, &path[1][1]);
 	}
