@@ -6,36 +6,11 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 01:11:26 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/16 18:04:40 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/17 15:45:09 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	run_child(t_cmd *cmd, t_shell *shell)
-{
-	pid_t	pid;
-
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("minishell: fork");
-		shell->exit_code = 1;
-		return (1);
-	}
-	if (pid == 0)
-	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
-		run_external_or_builtin_in_child(cmd, shell);
-	}
-	signal_waiter(shell);
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
-	return (0);
-}
 
 void	my_execve(char *path, char **argv, char **envp, t_shell *shell)
 {
@@ -89,13 +64,4 @@ int	execute_single_builtin(t_cmd *cmd, t_shell *shell)
 	}
 	close(original_stdin);
 	return (shell->exit_code);
-}
-
-void	waited(void)
-{
-	int	i;
-
-	i = 0;
-	while (i < 11000000)
-		i++;
 }

@@ -6,13 +6,11 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 19:59:07 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/11 00:32:37 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/17 16:08:42 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-/// //env level by calling the minishell, bash, zsh...etc
 
 int	init_env(t_shell *shell, char **envp)
 {
@@ -32,6 +30,7 @@ int	init_env(t_shell *shell, char **envp)
 		init_node_fields(new_node, envp[i], equal_sign);
 		add_node_to_env_list(shell, new_node);
 	}
+	change_shlvl_value(shell);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 19:13:00 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/16 18:07:34 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/17 16:08:24 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ void	setting_line(char **line, t_env *current);
 void	safe_free(char *str);
 int		*check_append(int ex_flag, char *str);
 char	*get_delim(char *str, char *equal_sign);
+void	change_shlvl_value(t_shell *shell);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 16:58:54 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/15 18:25:37 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/17 06:03:03 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ void	main_loop(t_shell *sh)
 			add_history(line);
 		if (parse_input(sh, line) != 0)
 		{
-			free_front_end_shell(sh);
+			free_fe_shell(sh);
 			continue ;
 		}
-		process_heredoc(sh);
-		cmd_parser(sh);
+		if (process_heredoc(sh) != -1)
+			cmd_parser(sh);
 		free(line);
-		free_front_end_shell(sh);
+		free_fe_shell(sh);
 	}
 }

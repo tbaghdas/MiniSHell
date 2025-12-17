@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 19:44:23 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/10 04:25:57 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/17 16:20:27 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@
 # include "built_in/built_in.h"
 # include "signals/signals.h"
 # include "cmd_parsing/cmd_parser.h"
-// # include "gnl/get_next_line.h"
 
 extern volatile sig_atomic_t	g_signum;
 
@@ -60,9 +59,8 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-void	free_front_end_shell(t_shell *sh);
+void	free_fe_shell(t_shell *sh);
 void	main_loop(t_shell *sh);
 int		parse_input(t_shell *sh, char *line);
-void	print_cmds(t_shell *sh);
 
 #endif

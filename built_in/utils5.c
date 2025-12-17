@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 20:06:37 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/15 18:03:07 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/17 16:24:09 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,26 +48,18 @@ char	*get_delim(char *str, char *equal_sign)
 	return (equal_sign);
 }
 
-// void	change_shlvl_value(t_env **env, char **cmd)
-// {
-// 	t_env	*tmp;
-// 	int		res;
+void	change_shlvl_value(t_shell *shell)
+{
+	int		res;
+	char	*val;
 
-// 	tmp = *env;
-// 	res = 0;
-// 	if (ft_strcmp(cmd[0], "./minishell") == 0 && cmd[1] == NULL)
-// 	{
-// 		while (tmp)
-// 		{
-// 			if (ft_strcmp(tmp->key, "SHLVL") == 0)
-// 			{
-// 				if (tmp->value)
-// 					res = ft_atoi(tmp->value);
-// 				free(tmp->value);
-// 				tmp->value = ft_itoa(res + 1);
-// 				return ;
-// 			}
-// 			tmp = tmp->next;
-// 		}
-// 	}
-// }
+	res = 0;
+	val = ft_getenv("SHLVL", shell->env);
+	if (val)
+		res = ft_atoi(val);
+	if (res == 1000)
+		res = 1;
+	else
+		res++;
+	ft_setenv("SHLVL", (int []){1, 0}, ft_itoa(res), shell);
+}

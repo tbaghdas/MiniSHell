@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 16:48:28 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/10 22:00:37 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/17 03:54:36 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	setup_signals();
 	main_loop(&sh);
-	free_front_end_shell(&sh);
+	free_fe_shell(&sh);
 	free_env(&sh);
 	return (sh.exit_code);
 }

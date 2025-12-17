@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 15:26:41 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/08 15:03:50 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/17 15:43:26 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	isdigit_str(char *str)
 
 void	free_all(t_shell *shell, char **env)
 {
-	free_front_end_shell(shell);
+	free_fe_shell(shell);
 	free_env(shell);
 	if (env != NULL)
 		free_split(env);

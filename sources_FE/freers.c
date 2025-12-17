@@ -6,7 +6,7 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 23:35:23 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/11 06:08:52 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/17 05:07:43 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	free_cmd(t_shell *sh)
 		free_redirs(sh);
 }
 
-void	free_front_end_shell(t_shell *sh)
+void	free_fe_shell(t_shell *sh)
 {
 	t_cmd	*tmp;
 

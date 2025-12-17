@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/23 20:44:44 by ilya              #+#    #+#             */
-/*   Updated: 2025/12/15 02:07:05 by ikiriush         ###   ########.fr       */
+/*   Created: 2025/11/23 20:44:44 by ikiriush          #+#    #+#             */
+/*   Updated: 2025/12/17 03:54:36 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	fatal_error(char *line, t_shell *sh)
 	int	saved;
 
 	saved = errno;
-	free_front_end_shell(sh);
+	free_fe_shell(sh);
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(line, 2);
 	ft_putstr_fd(": ", 2);

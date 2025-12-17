@@ -6,11 +6,23 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 22:54:05 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/16 02:31:33 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/17 05:27:32 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static void	heredoc_cleanup(int wfd, char *line, t_shell *sh)
+{
+	if (wfd >= 0)
+	{
+		close(wfd);
+		wfd = -1;
+	}
+	safe_free(line);
+	free_fe_shell(sh);
+	free_env(sh);
+}
 
 static void	heredoc_read_child(int wfd, t_redir *rd, t_shell *sh)
 {
@@ -21,6 +33,8 @@ static void	heredoc_read_child(int wfd, t_redir *rd, t_shell *sh)
 	while (42)
 	{
 		line = readline(">");
+		if (g_signum == SIGINT)
+			exit ((heredoc_cleanup(wfd, line, sh), 130));
 		if (!line)
 		{
 			syntax_errorer_heredoc(rd, sh);
@@ -36,9 +50,7 @@ static void	heredoc_read_child(int wfd, t_redir *rd, t_shell *sh)
 			fatal_error("write (2)", sh);
 		free(line);
 	}
-	close(wfd);
-	safe_free(line);
-	exit((free_front_end_shell(sh), free_env(sh), 0));
+	exit((heredoc_cleanup(wfd, line, sh), 0));
 }
 
 static int	temp_file_writer(t_redir *rd, t_shell *sh)
@@ -57,6 +69,7 @@ static int	temp_file_writer(t_redir *rd, t_shell *sh)
 	if (pid == 0)
 		heredoc_read_child(wfd, rd, sh);
 	close(wfd);
+	wfd = -1;
 	if (wait_heredoc_child(pid, sh) == -1)
 		perror("waitpid");
 	signal(SIGINT, sigint_handler);
@@ -68,7 +81,7 @@ static int	temp_file_writer(t_redir *rd, t_shell *sh)
 
 static int	heredoc_writer(t_redir *rd, t_shell *sh)
 {
-	int		rfd;
+	int	rfd;
 
 	if (temp_file_writer(rd, sh) == -1)
 	{

@@ -6,7 +6,7 @@
 /*   By: tbaghdas <tbaghdas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 19:02:03 by tbaghdas          #+#    #+#             */
-/*   Updated: 2025/12/16 18:08:34 by tbaghdas         ###   ########.fr       */
+/*   Updated: 2025/12/17 15:44:42 by tbaghdas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,14 @@ void	child_process(int pipefd[2], int *prev_fd, t_cmd *cur, t_shell *shell)
 	{
 		dup2(*prev_fd, STDIN_FILENO);
 		close(*prev_fd);
+		*prev_fd = -1;
 	}
 	if (cur->next)
-	{
 		dup2(pipefd[1], STDOUT_FILENO);
+	if (pipefd[0] != -1)
 		close(pipefd[0]);
+	if (pipefd[1] != -1)
 		close(pipefd[1]);
-	}
 	run_external_or_builtin_in_child(cur, shell);
 }
 
@@ -69,13 +70,22 @@ void	closing_fds(int pipefd[2], int *prev_fd, t_cmd *has_next)
 		close(pipefd[1]);
 		*prev_fd = pipefd[0];
 	}
+	else
+	{
+		if (pipefd[0] != -1)
+			close(pipefd[0]);
+		if (pipefd[1] != -1)
+			close(pipefd[1]);
+	}
 }
 
-int	this_while_body(int *prev_fd, t_cmd *cur, t_shell *shell)
+int	this_while_body(int *prev_fd, t_cmd *cur, t_shell *shell, pid_t *last)
 {
 	int		pipefd[2];
 	pid_t	pid;
 
+	pipefd[0] = -1;
+	pipefd[1] = -1;
 	if (cur->next)
 	{
 		if (pipe(pipefd) == -1)
@@ -85,18 +95,15 @@ int	this_while_body(int *prev_fd, t_cmd *cur, t_shell *shell)
 	signal(SIGQUIT, SIG_IGN);
 	pid = fork();
 	if (pid == -1)
-	{
-		perror("minishell: fork");
-		shell->exit_code = 1;
-		return (1);
-	}
+		return (perror("minishell: fork"), shell->exit_code = 1, 1);
 	if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		child_process(pipefd, prev_fd, cur, shell);
 	}
-	waited();
+	if (cur->next == NULL && last)
+		*last = pid;
 	return (closing_fds(pipefd, prev_fd, cur->next), 0);
 }
 
@@ -104,16 +111,18 @@ int	execute_pipeline(t_cmd *start, t_shell *shell)
 {
 	t_cmd	*cur;
 	int		prev_fd;
+	pid_t	last;
 
 	prev_fd = -1;
+	last = -1;
 	cur = start;
 	while (cur)
 	{
-		if (this_while_body(&prev_fd, cur, shell) != 0)
+		if (this_while_body(&prev_fd, cur, shell, &last) != 0)
 			return (1);
 		cur = cur->next;
 	}
-	signal_waiter(shell);
+	signal_waiter(last, shell);
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
 	return (shell->exit_code);

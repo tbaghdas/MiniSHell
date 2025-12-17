@@ -1,5 +1,5 @@
 # === Variables ===
-CFLAGS  = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS  = -Wall -Wextra -Werror -g
 
 LDFLAGS = -lreadline -lhistory
 
@@ -37,8 +37,6 @@ SRCS    = main.c \
 		  cmd_parsing/cmd_parsing4.c \
 		  cmd_parsing/create_env.c \
 		  signals/signals.c
-#		  gnl/get_next_line.c \
-#		  gnl/get_next_line_utils.c
 
 OBJS    = $(SRCS:.c=.o)
 

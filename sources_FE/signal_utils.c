@@ -6,40 +6,48 @@
 /*   By: ikiriush <ikiriush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 01:40:56 by ikiriush          #+#    #+#             */
-/*   Updated: 2025/12/16 02:31:48 by ikiriush         ###   ########.fr       */
+/*   Updated: 2025/12/17 16:22:57 by ikiriush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	signal_waiter(t_shell *sh)
+void	signal_waiter(pid_t last, t_shell *sh)
 {
 	int		status;
 	int		last_status;
+	pid_t	pid;
 
 	last_status = 0;
-	while (wait(&status) > 0)
+	pid = wait(&status);
+	while (pid > 0)
 	{
-		if (WIFEXITED(status))
-			last_status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			last_status = 128 + WTERMSIG(status);
-		sh->exit_code = last_status;
+		if (pid == last)
+		{
+			if (WIFEXITED(status))
+				last_status = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				last_status = 128 + WTERMSIG(status);
+		}
+		pid = wait(&status);
 	}
+	sh->exit_code = last_status;
 }
 
 void	heredoc_sigint_handler(int sig)
 {
 	(void)sig;
-	write(STDOUT_FILENO, "\n", 1);
+	g_signum = SIGINT;
+	write(1, "\n", 1);
 	close(STDIN_FILENO);
-	exit(130);
 }
 
 int	wait_heredoc_child(pid_t pid, t_shell *sh)
 {
 	int	status;
+	int	code;
 
+	code = 0;
 	if (waitpid(pid, &status, 0) == -1)
 		return (-1);
 	if (WIFEXITED(status))
